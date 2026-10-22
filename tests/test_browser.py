@@ -66,6 +66,7 @@ def test_full_flow_in_browser(page):
     names = page.locator(".results h3").all_inner_texts()
     assert names[0] == "Compact Travel Mouse" and "Gaming Mouse G5" == names[-1]
     FIGURES.mkdir(parents=True, exist_ok=True)
+    page.wait_for_load_state("load")  # images loaded before the figure is taken
     page.screenshot(path=FIGURES / "search_results.png")
 
     # product detail: unavailable product is rejected by the core (BR2)
@@ -95,6 +96,7 @@ def test_full_flow_in_browser(page):
     page.get_by_role("button", name="Update").first.click()
     assert notice(page) is None
     assert "Total: 83.75 EUR" in page.inner_text("main")
+    page.wait_for_load_state("load")
     page.screenshot(path=FIGURES / "cart.png")
 
     # remove, checkout, confirm

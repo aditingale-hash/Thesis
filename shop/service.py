@@ -23,6 +23,8 @@ import secrets
 import sqlite3
 from datetime import datetime, timezone
 
+from shop import db
+
 MAX_QTY = 10
 
 SORT_OPTIONS = {
@@ -195,7 +197,7 @@ def register(conn: sqlite3.Connection, username, password, password_repeat) -> i
     page (the runner logs in before the run), and there is no API route for it.
     Accounts live in shop.db and are deleted by every reset.
     """
-    username = str(username or "").strip()
+    username = str(username or "")
     password = str(password or "")
     if not re.fullmatch(USERNAME_PATTERN, username):
         raise RegistrationError(
@@ -207,10 +209,14 @@ def register(conn: sqlite3.Connection, username, password, password_repeat) -> i
         raise RegistrationError("The two passwords do not match.")
     if conn.execute("SELECT 1 FROM users WHERE username = ?", (username,)).fetchone():
         raise RegistrationError(f"The username {username} is already taken.")
+    # Random id instead of the next rowid: after a reset the ids of deleted accounts would be
+    # handed out again, and an old session cookie would then open another person's cart (BR1).
+    user_id = secrets.randbelow(2**62) + db.TEST_USER_ID + 1
     with conn:
-        user_id = conn.execute(
-            "INSERT INTO users (username, password_hash) VALUES (?, ?)", (username, hash_password(password))
-        ).lastrowid
+        conn.execute(
+            "INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)",
+            (user_id, username, hash_password(password)),
+        )
         conn.execute("INSERT INTO carts (user_id) VALUES (?)", (user_id,))
     return user_id
 

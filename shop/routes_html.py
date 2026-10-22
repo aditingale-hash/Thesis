@@ -22,7 +22,8 @@ PRODUCT_PHOTOS = db.SHOP_DIR / "static" / "products"
 
 
 def _image_url(product: dict) -> str:
-    """Product photo ``static/products/<id>.jpg`` if present, else the category illustration."""
+    """Product photo ``static/products/<id>.jpg`` if present, else the category illustration
+    (or a generic product illustration for cart items, which carry no category)."""
     product_id = product.get("id", product.get("product_id"))
     if (PRODUCT_PHOTOS / f"{product_id}.jpg").exists():
         return f"/static/products/{product_id}.jpg"

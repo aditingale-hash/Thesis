@@ -77,7 +77,7 @@ def test_no_agent_specific_attributes(client):
     for url in ("/login", "/register", "/", "/search?q=mouse", "/products/101", "/cart", "/checkout"):
         html = client.get(url).text
         assert "data-testid" not in html and "data-" not in html
-        assert "<script" not in html
+        assert "<script" not in html and "loading=" not in html and "<dialog" not in html
         for field_id in re.findall(r'<input type="(?:text|password|search|number)" id="([^"]+)"', html):
             assert f'<label for="{field_id}"' in html
     css = re.sub(r"/\*.*?\*/", "", client.get("/static/style.css").text, flags=re.S)  # rules only, no comments

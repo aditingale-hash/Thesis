@@ -3,7 +3,7 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from shop import db, service, state_reader
+from shop import db, reset, service, state_reader
 from shop.app import app
 from tests.conftest import notice
 
@@ -34,6 +34,7 @@ def test_registered_user_can_log_in_again(shop_db):
 @pytest.mark.parametrize("username, password, repeat, message", [
     ("ab", "correct-horse", None, "Username must be 3 to 30 characters: letters, digits, dot, dash or underscore."),
     ("bad name", "correct-horse", None, "Username must be 3 to 30 characters: letters, digits, dot, dash or underscore."),
+    (" alice_01", "correct-horse", None, "Username must be 3 to 30 characters: letters, digits, dot, dash or underscore."),
     ("alice_01", "short", None, "Password must be at least 8 characters long."),
     ("alice_01", "correct-horse", "other-horse", "The two passwords do not match."),
     (db.TEST_USERNAME, "correct-horse", None, f"The username {db.TEST_USERNAME} is already taken."),
@@ -43,6 +44,19 @@ def test_register_rejections(shop_db, username, password, repeat, message):
     assert r.status_code == 422
     assert notice(r.text) == message
     assert f'value="{username}"' in r.text  # the typed username is kept, passwords are not
+
+
+def test_old_session_cannot_open_a_new_account_after_reset(shop_db):
+    """BR1: ids of deleted accounts are not reused, so a cookie from before a reset opens nothing."""
+    alice = TestClient(app)
+    _register(alice, "alice_01")
+    alice.post("/api/cart/items", json={"product_id": 101, "quantity": 1})
+    reset.reset()
+    bob = TestClient(app)
+    _register(bob, "bob_02")
+    bob.post("/api/cart/items", json={"product_id": 502, "quantity": 3})
+    r = alice.get("/api/cart")
+    assert r.status_code == 401 and r.json()["error"]["rule"] == "BR1"
 
 
 def test_passwords_are_salted_hashes(shop_db):
