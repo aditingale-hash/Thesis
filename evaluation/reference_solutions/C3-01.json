@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Mice"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Rating: high to low"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Gaming Mouse G5"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Mice",
+        "sort": "rating_desc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 107,
+        "quantity": 1
+      }
+    }
+  ]
+}

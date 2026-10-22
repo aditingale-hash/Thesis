@@ -1,0 +1,81 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Cart"
+      }
+    },
+    {
+      "click": {
+        "css": "form[action='/cart/remove']:has(input[value='106']) button"
+      }
+    },
+    {
+      "fill": {
+        "role": "searchbox",
+        "name": "Search products",
+        "text": "Bluetooth Mouse B3"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Search"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Bluetooth Mouse B3"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Checkout"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Confirm order"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "get_cart",
+      "args": {}
+    },
+    {
+      "action": "remove_from_cart",
+      "args": {
+        "product_id": 106
+      }
+    },
+    {
+      "action": "search_products",
+      "args": {
+        "query": "Bluetooth Mouse B3"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 108,
+        "quantity": 1
+      }
+    },
+    {
+      "action": "checkout",
+      "args": {}
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "C1-02",
+  "category": "C1",
+  "level": "simple",
+  "instruction": "Add the USB-C Hub 7-in-1 to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 303,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "C2-02",
+  "category": "C2",
+  "level": "simple",
+  "instruction": "Add the most expensive available headset to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Headsets",
+    "objective": "most_expensive"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 704,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

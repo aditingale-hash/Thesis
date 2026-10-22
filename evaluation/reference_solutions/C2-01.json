@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Keyboards"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Price: low to high"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Basic USB Keyboard"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Keyboards",
+        "sort": "price_asc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 205,
+        "quantity": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "C3-02",
+  "category": "C3",
+  "level": "medium",
+  "instruction": "Add the highest-rated available laptop bag to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Laptop Bags",
+    "objective": "highest_rated"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 407,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

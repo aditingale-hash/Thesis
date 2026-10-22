@@ -1,0 +1,34 @@
+{
+  "id": "C5-02",
+  "category": "C5",
+  "level": "medium",
+  "instruction": "The cart should contain 5 units of the Notebook A5 Dotted. Change the quantity accordingly and keep the other items.",
+  "initial_state": {
+    "cart": [
+      {
+        "product_id": 502,
+        "quantity": 2
+      },
+      {
+        "product_id": 701,
+        "quantity": 1
+      }
+    ]
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 502,
+        "quantity": 5
+      },
+      {
+        "product_id": 701,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

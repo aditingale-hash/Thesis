@@ -1,0 +1,21 @@
+{
+  "id": "C1-01",
+  "category": "C1",
+  "level": "simple",
+  "instruction": "Add the Wireless Mouse M2 to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 101,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

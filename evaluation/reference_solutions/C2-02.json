@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Headsets"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Price: high to low"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Noise-Cancelling Headset NC9"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Headsets",
+        "sort": "price_desc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 704,
+        "quantity": 1
+      }
+    }
+  ]
+}

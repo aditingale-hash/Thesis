@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Keyboards"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Rating: high to low"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Compact Keyboard K1 Wireless"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Keyboards",
+        "sort": "rating_desc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 202,
+        "quantity": 1
+      }
+    }
+  ]
+}

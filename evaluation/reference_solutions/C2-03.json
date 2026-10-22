@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Laptop Bags"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Price: low to high"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Laptop Briefcase Slim"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Laptop Bags",
+        "sort": "price_asc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 409,
+        "quantity": 1
+      }
+    }
+  ]
+}

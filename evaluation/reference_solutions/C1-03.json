@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "fill": {
+        "role": "searchbox",
+        "name": "Search products",
+        "text": "Notebook A5 Dotted"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Search"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Notebook A5 Dotted"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "query": "Notebook A5 Dotted"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 502,
+        "quantity": 1
+      }
+    }
+  ]
+}

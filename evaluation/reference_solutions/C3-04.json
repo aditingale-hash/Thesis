@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Webcams"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Rating: high to low"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "4K Webcam C4"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Webcams",
+        "sort": "rating_desc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 803,
+        "quantity": 1
+      }
+    }
+  ]
+}

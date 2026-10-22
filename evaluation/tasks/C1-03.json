@@ -1,0 +1,21 @@
+{
+  "id": "C1-03",
+  "category": "C1",
+  "level": "simple",
+  "instruction": "Add the Notebook A5 Dotted to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 502,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

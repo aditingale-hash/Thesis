@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Laptop Bags"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Rating: high to low"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Waterproof Laptop Backpack"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Laptop Bags",
+        "sort": "rating_desc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 407,
+        "quantity": 1
+      }
+    }
+  ]
+}

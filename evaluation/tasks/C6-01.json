@@ -1,0 +1,30 @@
+{
+  "id": "C6-01",
+  "category": "C6",
+  "level": "medium",
+  "instruction": "Remove the product that is not available from the cart and keep the other items.",
+  "initial_state": {
+    "cart": [
+      {
+        "product_id": 101,
+        "quantity": 1
+      },
+      {
+        "product_id": 106,
+        "quantity": 1
+      }
+    ]
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 101,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

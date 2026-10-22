@@ -1,0 +1,8 @@
+# Experiment plan.
+experiment: pilot              # results go to results/<experiment>/
+tasks: all                     # "all" or a list of task ids, e.g. [C1-01, C4-02]
+pipelines: [dom, visual, tool]
+repetitions: 1                 # R; choose after the pilot
+seed: 2026                     # shuffles the run order
+infrastructure_retries: 2      # S5 runs are retried up to this many times
+shop_url: null                 # null = the runner starts the shop itself on a free localhost port

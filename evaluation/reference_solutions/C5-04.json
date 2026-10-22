@@ -1,0 +1,55 @@
+{
+  "browser": [
+    {
+      "fill": {
+        "role": "searchbox",
+        "name": "Search products",
+        "text": "Powered USB Hub 10-Port"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Search"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Powered USB Hub 10-Port"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Cart"
+      }
+    },
+    {
+      "fill": {
+        "css": "#quantity-305",
+        "text": "3"
+      }
+    },
+    {
+      "click": {
+        "css": "form[action='/cart/update']:has(input[value='305']) button"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "get_product",
+      "args": {
+        "product_id": 305
+      }
+    },
+    {
+      "action": "update_cart_item",
+      "args": {
+        "product_id": 305,
+        "quantity": 3
+      }
+    }
+  ]
+}

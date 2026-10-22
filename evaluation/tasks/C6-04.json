@@ -1,0 +1,30 @@
+{
+  "id": "C6-04",
+  "category": "C6",
+  "level": "medium",
+  "instruction": "Reduce the number of USB Headset H1 in the cart to 1 and remove the webcam.",
+  "initial_state": {
+    "cart": [
+      {
+        "product_id": 701,
+        "quantity": 3
+      },
+      {
+        "product_id": 802,
+        "quantity": 1
+      }
+    ]
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 701,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

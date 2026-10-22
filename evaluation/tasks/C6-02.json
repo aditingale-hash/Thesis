@@ -1,0 +1,26 @@
+{
+  "id": "C6-02",
+  "category": "C6",
+  "level": "medium",
+  "instruction": "The cart contains the wrong mouse. Replace it with one Wireless Mouse M2.",
+  "initial_state": {
+    "cart": [
+      {
+        "product_id": 102,
+        "quantity": 1
+      }
+    ]
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 101,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

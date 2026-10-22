@@ -4,46 +4,20 @@ Walks through the whole shopping flow with Playwright and saves the two thesis
 screenshots (search results page, cart page) to docs/figures/.
 """
 
-import socket
-import threading
-import time
 from pathlib import Path
 
 import pytest
-import uvicorn
 
 from shop import db
-from shop.app import app
-
-playwright = pytest.importorskip("playwright.sync_api")
 
 FIGURES = Path(__file__).resolve().parents[1] / "docs" / "figures"
 
 
 @pytest.fixture
-def base_url(shop_db):
-    """Run the shop with uvicorn in a background thread on a free port."""
-    with socket.socket() as s:
-        s.bind(("127.0.0.1", 0))
-        port = s.getsockname()[1]
-    server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=port, log_level="warning"))
-    thread = threading.Thread(target=server.run, daemon=True)
-    thread.start()
-    while not server.started:
-        time.sleep(0.05)
-    yield f"http://127.0.0.1:{port}"
-    server.should_exit = True
-    thread.join()
-
-
-@pytest.fixture
-def page(base_url):
-    with playwright.sync_playwright() as p:
-        browser = p.chromium.launch()
-        context = browser.new_context(viewport={"width": 1280, "height": 800}, base_url=base_url)
-        page = context.new_page()
-        yield page
-        browser.close()
+def page(shop_db, shop_server, chromium):
+    context = chromium.new_context(viewport={"width": 1280, "height": 800}, base_url=shop_server)
+    yield context.new_page()
+    context.close()
 
 
 def notice(page):

@@ -1,0 +1,26 @@
+{
+  "id": "C4-03",
+  "category": "C4",
+  "level": "medium",
+  "instruction": "Add the highest-rated available desk lamp that costs less than 40 euros to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Desk Lamps",
+    "price_below": 40,
+    "objective": "highest_rated"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 607,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

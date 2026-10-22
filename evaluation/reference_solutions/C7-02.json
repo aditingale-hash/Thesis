@@ -1,0 +1,67 @@
+{
+  "browser": [
+    {
+      "fill": {
+        "role": "searchbox",
+        "name": "Search products",
+        "text": "Compact Keyboard K1"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Search"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Compact Keyboard K1"
+      }
+    },
+    {
+      "fill": {
+        "role": "spinbutton",
+        "name": "Quantity",
+        "text": "2"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Checkout"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Confirm order"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "query": "Compact Keyboard K1"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 201,
+        "quantity": 2
+      }
+    },
+    {
+      "action": "checkout",
+      "args": {}
+    }
+  ]
+}

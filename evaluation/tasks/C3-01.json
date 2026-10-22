@@ -1,0 +1,25 @@
+{
+  "id": "C3-01",
+  "category": "C3",
+  "level": "medium",
+  "instruction": "Add the highest-rated available mouse to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Mice",
+    "objective": "highest_rated"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 107,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

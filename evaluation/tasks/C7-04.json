@@ -1,0 +1,31 @@
+{
+  "id": "C7-04",
+  "category": "C7",
+  "level": "complex",
+  "instruction": "Place an order for the cheapest available webcam with a rating of at least 4.4.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Webcams",
+    "min_rating": 4.4,
+    "objective": "cheapest"
+  },
+  "goal_state": {
+    "cart": [],
+    "orders": [
+      {
+        "lines": [
+          {
+            "product_id": 807,
+            "quantity": 1
+          }
+        ]
+      }
+    ]
+  },
+  "invariants": [
+    "exactly_one_order",
+    "cart_empty"
+  ]
+}

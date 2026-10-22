@@ -1,0 +1,26 @@
+{
+  "id": "C7-01",
+  "category": "C7",
+  "level": "complex",
+  "instruction": "Buy one Notebook A5 Lined: put it in the cart and place the order.",
+  "initial_state": {
+    "cart": []
+  },
+  "goal_state": {
+    "cart": [],
+    "orders": [
+      {
+        "lines": [
+          {
+            "product_id": 501,
+            "quantity": 1
+          }
+        ]
+      }
+    ]
+  },
+  "invariants": [
+    "exactly_one_order",
+    "cart_empty"
+  ]
+}

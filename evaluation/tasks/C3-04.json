@@ -1,0 +1,25 @@
+{
+  "id": "C3-04",
+  "category": "C3",
+  "level": "medium",
+  "instruction": "Add the highest-rated available webcam to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Webcams",
+    "objective": "highest_rated"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 803,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "C6-03",
+  "category": "C6",
+  "level": "medium",
+  "instruction": "Remove the USB hub from the cart and keep everything else.",
+  "initial_state": {
+    "cart": [
+      {
+        "product_id": 301,
+        "quantity": 2
+      },
+      {
+        "product_id": 502,
+        "quantity": 1
+      },
+      {
+        "product_id": 603,
+        "quantity": 1
+      }
+    ]
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 502,
+        "quantity": 1
+      },
+      {
+        "product_id": 603,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

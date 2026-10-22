@@ -1,0 +1,25 @@
+{
+  "id": "C2-01",
+  "category": "C2",
+  "level": "simple",
+  "instruction": "Add the cheapest available keyboard to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Keyboards",
+    "objective": "cheapest"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 205,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

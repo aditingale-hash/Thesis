@@ -1,0 +1,26 @@
+{
+  "id": "C2-03",
+  "category": "C2",
+  "level": "simple",
+  "instruction": "Add the cheapest available laptop bag that costs more than 40 euros to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Laptop Bags",
+    "price_above": 40,
+    "objective": "cheapest"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 409,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}
