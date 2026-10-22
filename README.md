@@ -76,8 +76,10 @@ Configuration: `config/model.yaml` (model, context, seed, coordinate system), `c
 (S2-S4), `config/plan.yaml` (tasks, pipelines, repetitions, seed, retries). Ollama must be running.
 
 ```bash
-# one task in one pipeline, for debugging (results/debug/)
+# one task in one pipeline, for debugging (results/debug/); prints every step at the end
 python -m evaluation.runner run-one --task C1-01 --pipeline dom
+# the same with a visible, slowed-down browser window, to watch the agent (timings not comparable)
+python -m evaluation.runner run-one --task C1-01 --pipeline dom --show
 
 # the whole plan (results/<experiment>/); safe to stop and start again: finished runs are skipped
 python -m evaluation.runner run --plan config/plan.yaml

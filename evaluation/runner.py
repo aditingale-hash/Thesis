@@ -147,15 +147,17 @@ def build_runs(plan: dict) -> list[dict]:
 class Browser:
     """One Chromium for the experiment; relaunched after a crash."""
 
-    def __init__(self):
+    def __init__(self, show: bool = False):
         from playwright.sync_api import sync_playwright
         self.playwright = sync_playwright().start()
         self.browser = None
+        self.show = show
         self.ensure()
 
     def ensure(self):
         if self.browser is None or not self.browser.is_connected():
-            self.browser = self.playwright.chromium.launch(headless=True)
+            # show=True (run-one --show only): visible window, slowed down so a person can follow it
+            self.browser = self.playwright.chromium.launch(headless=not self.show, slow_mo=700 if self.show else 0)
         return self.browser
 
     def close(self):
@@ -200,7 +202,8 @@ def execute_run(run: dict, base_url: str, browser: Browser | None, model, model_
     return row
 
 
-def run_experiment(plan_path: Path, stub: bool = False, only=None, experiment: str | None = None) -> Path:
+def run_experiment(plan_path: Path, stub: bool = False, only=None, experiment: str | None = None,
+                   show: bool = False) -> Path:
     """Run a plan (or, with ``only``, a list of given runs) and return the experiment directory."""
     plan = load_yaml(plan_path)
     model_config, limits = load_yaml("model.yaml"), load_yaml("limits.yaml")
@@ -224,7 +227,7 @@ def run_experiment(plan_path: Path, stub: bool = False, only=None, experiment: s
             build_db.build()
         server = ShopServer().start()
         base_url = server.url
-    browser = Browser() if any(r["pipeline"] != "tool" for r in todo) else None
+    browser = Browser(show) if any(r["pipeline"] != "tool" for r in todo) else None
     try:
         for i, run in enumerate(todo, 1):
             row = execute_run(run, base_url, browser, model, model_config, limits, exp_dir, record["config_id"],
@@ -251,6 +254,8 @@ def main(argv=None) -> int:
     one.add_argument("--pipeline", required=True, choices=PIPELINES)
     one.add_argument("--plan", default=str(CONFIG_DIR / "plan.yaml"))
     one.add_argument("--stub", action="store_true")
+    one.add_argument("--show", action="store_true",
+                     help="show the browser window, slowed down (debugging only; timings are not comparable)")
     args = parser.parse_args(argv)
 
     if args.command == "run":
@@ -262,9 +267,11 @@ def main(argv=None) -> int:
         parser.error(f"unknown task {args.task}")
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     run = {"run_id": f"{args.task}_{args.pipeline}_{stamp}", "task": tasks[0], "pipeline": args.pipeline, "repetition": 1}
-    exp_dir = run_experiment(Path(args.plan), args.stub, only=[run], experiment="debug")
+    exp_dir = run_experiment(Path(args.plan), args.stub, only=[run], experiment="debug", show=args.show)
     trace = exp_dir / run["run_id"] / "trace.jsonl"
     end = json.loads(trace.read_text(encoding="utf-8").splitlines()[-1])
+    from evaluation.labelling.viewer import show as show_run
+    print("\n" + show_run(str(exp_dir), run["run_id"]) + "\n")
     print(f"trace: {trace}")
     print(f"termination: {end['termination_reason']}  verification: {json.dumps(end['verification'])}")
     return 0
