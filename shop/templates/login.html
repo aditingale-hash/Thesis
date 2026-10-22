@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-card">
+  <h1>Log in</h1>
+  <form method="post" action="/login" novalidate>
+    <p class="field"><label for="username">Username</label><input type="text" id="username" name="username" autocomplete="username"></p>
+    <p class="field"><label for="password">Password</label><input type="password" id="password" name="password" autocomplete="current-password"></p>
+    <button class="button button-primary button-block" type="submit">Log in</button>
+  </form>
+  <p class="auth-switch">New to TechDesk Shop? <a href="/register">Create an account</a></p>
+</section>
+{% endblock %}

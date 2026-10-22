@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} - TechDesk Shop</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/">
+        <svg class="logo-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect x="2" y="6" width="28" height="18" rx="3" fill="#fca311"/><rect x="11" y="24" width="10" height="3" fill="#fca311"/><rect x="7" y="27" width="18" height="3" rx="1.5" fill="#fca311"/><rect x="6" y="10" width="20" height="10" rx="1.5" fill="#14213d"/></svg>
+        <span>TechDesk Shop</span>
+      </a>
+      <form class="header-search" action="/search" method="get" role="search">
+        <label for="q" class="visually-hidden">Search products</label>
+        <input type="search" id="q" name="q" value="{{ query or '' }}" placeholder="Search products">
+        <button type="submit">Search</button>
+      </form>
+      <nav class="header-nav" aria-label="Main">
+        <a href="/cart">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M3 4h2.2l2.3 11h11l2-8H6.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="9" cy="19.5" r="1.6" fill="currentColor"/><circle cx="17" cy="19.5" r="1.6" fill="currentColor"/></svg>
+          <span>Cart</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+  {% if error %}
+  <div class="container"><div class="notice" role="alert"><p>{{ error }}</p></div></div>
+  {% endif %}
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="container"><p>TechDesk Shop. Research prototype, TU Chemnitz.</p></div>
+  </footer>
+</body>
+</html>
