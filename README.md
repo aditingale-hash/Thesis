@@ -20,7 +20,7 @@ playwright install chromium                              # skip if Chromium is a
 ```bash
 python -m shop.build_db                   # catalogue.json -> shop/snapshot.db
 python -m shop.reset                      # snapshot.db -> shop/shop.db (optionally: a task file)
-uvicorn shop.app:app --port 8000          # http://localhost:8000  (login: testuser / testpass)
+python -m uvicorn shop.app:app --port 8000  # http://localhost:8000  (login: testuser / testpass)
 ```
 
 - HTML frontend: `/login`, `/`, `/search`, `/products/{id}`, `/cart`, `/checkout`
