@@ -1,0 +1,51 @@
+{
+  "browser": [
+    {
+      "fill": {
+        "role": "searchbox",
+        "name": "Search products",
+        "text": "LED Desk Lamp L1"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Search"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "LED Desk Lamp L1"
+      }
+    },
+    {
+      "fill": {
+        "role": "spinbutton",
+        "name": "Quantity",
+        "text": "4"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "query": "LED Desk Lamp L1"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 601,
+        "quantity": 4
+      }
+    }
+  ]
+}

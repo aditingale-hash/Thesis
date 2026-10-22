@@ -1,0 +1,26 @@
+{
+  "id": "C7-02",
+  "category": "C7",
+  "level": "complex",
+  "instruction": "Place an order for 2 units of the Compact Keyboard K1.",
+  "initial_state": {
+    "cart": []
+  },
+  "goal_state": {
+    "cart": [],
+    "orders": [
+      {
+        "lines": [
+          {
+            "product_id": 201,
+            "quantity": 2
+          }
+        ]
+      }
+    ]
+  },
+  "invariants": [
+    "exactly_one_order",
+    "cart_empty"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "browser": [
+    {
+      "fill": {
+        "role": "searchbox",
+        "name": "Search products",
+        "text": "Notebook A5 Lined"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Search"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Notebook A5 Lined"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Checkout"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Confirm order"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "query": "Notebook A5 Lined"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 501,
+        "quantity": 1
+      }
+    },
+    {
+      "action": "checkout",
+      "args": {}
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Desk Lamps"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Price: high to low"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Monitor Light Bar"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Desk Lamps",
+        "sort": "price_desc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 609,
+        "quantity": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "C5-03",
+  "category": "C5",
+  "level": "medium",
+  "instruction": "Add 4 units of the LED Desk Lamp L1 to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 601,
+        "quantity": 4
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

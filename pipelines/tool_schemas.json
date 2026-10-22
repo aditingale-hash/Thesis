@@ -1,0 +1,132 @@
+[
+  {
+    "name": "search_products",
+    "description": "Search the shop. Every word of the query must occur in the product name or category. Returns the matching products with id, name, category, price (EUR), rating (0-5), availability and badge.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "search words; empty string lists all products"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Mice",
+            "Keyboards",
+            "USB Hubs",
+            "Laptop Bags",
+            "Notebooks",
+            "Desk Lamps",
+            "Headsets",
+            "Webcams"
+          ],
+          "description": "only products of this category"
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "price_asc",
+            "price_desc",
+            "rating_desc"
+          ],
+          "description": "price low to high, price high to low, rating high to low"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_product",
+    "description": "Show all information about one product, including stock and description.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_cart",
+    "description": "Show the cart: items with unit price, quantity, line total and availability, and the total.",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "add_to_cart",
+    "description": "Add a quantity of a product to the cart. Returns the cart.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "integer"
+        },
+        "quantity": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id",
+        "quantity"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "update_cart_item",
+    "description": "Set the quantity of a product that is already in the cart. Returns the cart.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "integer"
+        },
+        "quantity": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id",
+        "quantity"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "remove_from_cart",
+    "description": "Remove a product from the cart. Returns the cart.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "checkout",
+    "description": "Place the order for all items in the cart (no payment needed). Returns the order.",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    }
+  }
+]

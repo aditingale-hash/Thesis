@@ -1,0 +1,34 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Cart"
+      }
+    },
+    {
+      "fill": {
+        "css": "#quantity-101",
+        "text": "3"
+      }
+    },
+    {
+      "click": {
+        "css": "form[action='/cart/update']:has(input[value='101']) button"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "get_cart",
+      "args": {}
+    },
+    {
+      "action": "update_cart_item",
+      "args": {
+        "product_id": 101,
+        "quantity": 3
+      }
+    }
+  ]
+}

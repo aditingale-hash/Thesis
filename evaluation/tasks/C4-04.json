@@ -1,0 +1,27 @@
+{
+  "id": "C4-04",
+  "category": "C4",
+  "level": "medium",
+  "instruction": "Add the cheapest available headset with a rating of at least 4.4 and a price of at most 80 euros to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Headsets",
+    "min_rating": 4.4,
+    "max_price": 80,
+    "objective": "cheapest"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 703,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

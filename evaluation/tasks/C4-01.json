@@ -1,0 +1,27 @@
+{
+  "id": "C4-01",
+  "category": "C4",
+  "level": "medium",
+  "instruction": "Add the cheapest available mouse with a rating of at least 4 and a price of at most 50 euros to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "Mice",
+    "min_rating": 4.0,
+    "max_price": 50,
+    "objective": "cheapest"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 108,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Webcams"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Price: low to high"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Wide-Angle Webcam W1"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Checkout"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Confirm order"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Webcams",
+        "sort": "price_asc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 807,
+        "quantity": 1
+      }
+    },
+    {
+      "action": "checkout",
+      "args": {}
+    }
+  ]
+}

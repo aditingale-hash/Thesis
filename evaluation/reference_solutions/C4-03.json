@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Desk Lamps"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Rating: high to low"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Dimmable LED Desk Lamp"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Desk Lamps",
+        "sort": "rating_desc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 607,
+        "quantity": 1
+      }
+    }
+  ]
+}

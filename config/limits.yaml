@@ -1,0 +1,4 @@
+# Stopping conditions (identical for all pipelines).
+max_invocations: 25            # S2: model invocations per run
+max_consecutive_invalid: 3     # S3: consecutive invalid actions (unparseable response or invalid at interface level)
+max_seconds: 600               # S4: task execution time (agent loop only)

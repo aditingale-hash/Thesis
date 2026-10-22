@@ -1,0 +1,45 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Cart"
+      }
+    },
+    {
+      "fill": {
+        "css": "#quantity-701",
+        "text": "1"
+      }
+    },
+    {
+      "click": {
+        "css": "form[action='/cart/update']:has(input[value='701']) button"
+      }
+    },
+    {
+      "click": {
+        "css": "form[action='/cart/remove']:has(input[value='802']) button"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "get_cart",
+      "args": {}
+    },
+    {
+      "action": "update_cart_item",
+      "args": {
+        "product_id": 701,
+        "quantity": 1
+      }
+    },
+    {
+      "action": "remove_from_cart",
+      "args": {
+        "product_id": 802
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "USB Hubs"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Price: low to high"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "USB-C Hub 7-in-1"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "USB Hubs",
+        "sort": "price_asc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 303,
+        "quantity": 1
+      }
+    }
+  ]
+}

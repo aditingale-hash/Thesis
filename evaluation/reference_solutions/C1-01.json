@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "fill": {
+        "role": "searchbox",
+        "name": "Search products",
+        "text": "Wireless Mouse M2"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Search"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Wireless Mouse M2"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "query": "Wireless Mouse M2"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 101,
+        "quantity": 1
+      }
+    }
+  ]
+}

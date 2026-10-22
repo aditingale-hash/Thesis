@@ -1,0 +1,15 @@
+# Model configuration: identical for all three pipelines.
+model: qwen2.5vl:3b            # Ollama tag; multimodal, so the visual pipeline uses the same model
+quantization_note: "Ollama default tag (Q4_K_M weights); record the digest from config_record.json"
+ollama_url: http://localhost:11434
+num_ctx: 16384                 # context window in tokens
+temperature: 0
+seed: 42
+max_output_tokens: 512         # Ollama num_predict
+request_timeout_s: 300         # one model call; a timeout counts as infrastructure failure (S5)
+# DECISION (visual pipeline): coordinate system the model uses for click(x, y).
+#   pixels          = pixels of the 1280x800 screenshot (default)
+#   normalized_1000 = 0..1000 on both axes, converted to pixels by the pipeline
+coordinate_mode: pixels
+# DECISION (visual pipeline): optional perception component for text-only models. Only "none" is implemented.
+perception: none

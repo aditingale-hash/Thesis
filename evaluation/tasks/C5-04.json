@@ -1,0 +1,26 @@
+{
+  "id": "C5-04",
+  "category": "C5",
+  "level": "medium",
+  "instruction": "Increase the quantity of the Powered USB Hub 10-Port in the cart to the number of units that are in stock.",
+  "initial_state": {
+    "cart": [
+      {
+        "product_id": 305,
+        "quantity": 1
+      }
+    ]
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 305,
+        "quantity": 3
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

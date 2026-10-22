@@ -1,0 +1,27 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Cart"
+      }
+    },
+    {
+      "click": {
+        "css": "form[action='/cart/remove']:has(input[value='106']) button"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "get_cart",
+      "args": {}
+    },
+    {
+      "action": "remove_from_cart",
+      "args": {
+        "product_id": 106
+      }
+    }
+  ]
+}

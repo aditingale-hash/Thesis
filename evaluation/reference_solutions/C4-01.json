@@ -1,0 +1,44 @@
+{
+  "browser": [
+    {
+      "click": {
+        "role": "link",
+        "name": "Mice"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Price: low to high"
+      }
+    },
+    {
+      "click": {
+        "role": "link",
+        "name": "Bluetooth Mouse B3"
+      }
+    },
+    {
+      "click": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    }
+  ],
+  "tool": [
+    {
+      "action": "search_products",
+      "args": {
+        "category": "Mice",
+        "sort": "price_asc"
+      }
+    },
+    {
+      "action": "add_to_cart",
+      "args": {
+        "product_id": 108,
+        "quantity": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "C3-03",
+  "category": "C3",
+  "level": "medium",
+  "instruction": "Add the cheapest available USB hub with a rating of at least 4.5 to the cart.",
+  "initial_state": {
+    "cart": []
+  },
+  "constraints": {
+    "category": "USB Hubs",
+    "min_rating": 4.5,
+    "objective": "cheapest"
+  },
+  "goal_state": {
+    "cart": [
+      {
+        "product_id": 303,
+        "quantity": 1
+      }
+    ],
+    "orders": []
+  },
+  "invariants": [
+    "no_order_created"
+  ]
+}

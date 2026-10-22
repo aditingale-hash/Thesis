@@ -1,0 +1,31 @@
+{
+  "id": "C7-03",
+  "category": "C7",
+  "level": "complex",
+  "instruction": "Place an order that contains only one Bluetooth Mouse B3.",
+  "initial_state": {
+    "cart": [
+      {
+        "product_id": 106,
+        "quantity": 1
+      }
+    ]
+  },
+  "goal_state": {
+    "cart": [],
+    "orders": [
+      {
+        "lines": [
+          {
+            "product_id": 108,
+            "quantity": 1
+          }
+        ]
+      }
+    ]
+  },
+  "invariants": [
+    "exactly_one_order",
+    "cart_empty"
+  ]
+}

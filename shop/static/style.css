@@ -138,7 +138,7 @@ input[type=search]::-webkit-search-cancel-button { -webkit-appearance: none; }
 .product-thumb img { display: block; width: 100%; height: 150px; object-fit: contain; }
 .product-body { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px 14px; flex: 1; }
 .product-body .badge { position: absolute; top: 10px; left: 10px; }
-.product-body h3 a { color: var(--text); text-decoration: underline; text-decoration-color: #c5cbd6; text-underline-offset: 3px; }
+.product-body h3 a { display: block; color: var(--text); text-decoration: underline; text-decoration-color: #c5cbd6; text-underline-offset: 3px; }
 .product-body .availability { align-self: flex-start; }
 
 /* ---------- product page */
