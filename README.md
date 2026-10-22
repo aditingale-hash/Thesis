@@ -23,7 +23,9 @@ python -m shop.reset                      # snapshot.db -> shop/shop.db (optiona
 python -m uvicorn shop.app:app --port 8000  # http://localhost:8000  (login: testuser / testpass)
 ```
 
-- HTML frontend: `/login`, `/`, `/search`, `/products/{id}`, `/cart`, `/checkout`
+- HTML frontend: `/login`, `/register`, `/`, `/search`, `/products/{id}`, `/cart`, `/checkout`
+- You can create your own account at `/register` (linked from the login page). Every `python -m shop.reset` deletes all
+  accounts except `testuser`, because it restores the snapshot.
 - JSON API (agent tool interface):
 
 | Service function | Route |

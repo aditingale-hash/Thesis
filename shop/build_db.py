@@ -6,13 +6,12 @@ The catalogue is validated first (unique ids/names/prices, unique ratings within
 category, value ranges) so that constraint tasks can never have ties.
 """
 
-import hashlib
 import json
 import sqlite3
 from collections import defaultdict
 from pathlib import Path
 
-from shop import db
+from shop import db, service
 
 
 def load_catalogue(path: Path = db.CATALOGUE_PATH) -> dict:
@@ -75,9 +74,10 @@ def build(catalogue_path: Path = db.CATALOGUE_PATH, snapshot: Path | None = None
                 for p in catalogue["products"]
             ],
         )
-        password_hash = hashlib.sha256(db.TEST_PASSWORD.encode()).hexdigest()
+        # Fixed salt for the test user so that snapshot.db is byte-for-byte reproducible.
+        password_hash = service.hash_password(db.TEST_PASSWORD, salt="snapshot-test-user")
         conn.execute(
-            "INSERT INTO users (id, username, password_sha256) VALUES (?, ?, ?)",
+            "INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)",
             (db.TEST_USER_ID, db.TEST_USERNAME, password_hash),
         )
         conn.execute("INSERT INTO carts (id, user_id) VALUES (1, ?)", (db.TEST_USER_ID,))

@@ -40,7 +40,7 @@ CREATE TABLE products (
 CREATE TABLE users (
     id              INTEGER PRIMARY KEY,
     username        TEXT NOT NULL UNIQUE,
-    password_sha256 TEXT NOT NULL
+    password_hash   TEXT NOT NULL
 );
 CREATE TABLE carts (
     id      INTEGER PRIMARY KEY,

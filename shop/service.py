@@ -17,7 +17,9 @@ Returned dictionaries are exactly the fields the corresponding page shows:
 """
 
 import hashlib
+import hmac
 import re
+import secrets
 import sqlite3
 from datetime import datetime, timezone
 
@@ -66,6 +68,15 @@ class NotFoundError(ShopError):
 
     def __init__(self, message: str):
         super().__init__("NOT_FOUND", message)
+
+
+class RegistrationError(ShopError):
+    """A registration request was refused (bad username/password or name taken)."""
+
+    status_code = 422
+
+    def __init__(self, message: str):
+        super().__init__("REGISTER", message)
 
 
 class InvalidInputError(ShopError):
@@ -149,16 +160,59 @@ def categories(conn: sqlite3.Connection) -> list[str]:
     return [r["name"] for r in conn.execute("SELECT name FROM categories ORDER BY position")]
 
 
-# ---------------------------------------------------------------- login
+# ---------------------------------------------------------------- accounts
+
+_PBKDF2_ITERATIONS = 200_000
+USERNAME_PATTERN = r"[A-Za-z0-9_.-]{3,30}"
+MIN_PASSWORD_LENGTH = 8
+
+
+def hash_password(password: str, salt: str | None = None) -> str:
+    """Return a salted PBKDF2-SHA256 hash as ``pbkdf2_sha256$iterations$salt$hex``."""
+    salt = salt or secrets.token_hex(16)
+    digest = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), _PBKDF2_ITERATIONS).hex()
+    return f"pbkdf2_sha256${_PBKDF2_ITERATIONS}${salt}${digest}"
+
+
+def _password_matches(password: str, stored: str) -> bool:
+    _, iterations, salt, digest = stored.split("$")
+    candidate = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), int(iterations)).hex()
+    return hmac.compare_digest(candidate, digest)
 
 
 def login(conn: sqlite3.Connection, username, password) -> int:
     """Check the credentials and return the user id."""
-    row = conn.execute("SELECT id, password_sha256 FROM users WHERE username = ?", (str(username or ""),)).fetchone()
-    digest = hashlib.sha256(str(password or "").encode()).hexdigest()
-    if row is None or row["password_sha256"] != digest:
+    row = conn.execute("SELECT id, password_hash FROM users WHERE username = ?", (str(username or ""),)).fetchone()
+    if row is None or not _password_matches(str(password or ""), row["password_hash"]):
         raise BusinessRuleError("BR1", "Invalid username or password.")
     return row["id"]
+
+
+def register(conn: sqlite3.Connection, username, password, password_repeat) -> int:
+    """Create a user account with an empty cart and return the new user id.
+
+    For people trying the shop only: agents never see the login or registration
+    page (the runner logs in before the run), and there is no API route for it.
+    Accounts live in shop.db and are deleted by every reset.
+    """
+    username = str(username or "").strip()
+    password = str(password or "")
+    if not re.fullmatch(USERNAME_PATTERN, username):
+        raise RegistrationError(
+            "Username must be 3 to 30 characters: letters, digits, dot, dash or underscore."
+        )
+    if len(password) < MIN_PASSWORD_LENGTH:
+        raise RegistrationError(f"Password must be at least {MIN_PASSWORD_LENGTH} characters long.")
+    if password != str(password_repeat or ""):
+        raise RegistrationError("The two passwords do not match.")
+    if conn.execute("SELECT 1 FROM users WHERE username = ?", (username,)).fetchone():
+        raise RegistrationError(f"The username {username} is already taken.")
+    with conn:
+        user_id = conn.execute(
+            "INSERT INTO users (username, password_hash) VALUES (?, ?)", (username, hash_password(password))
+        ).lastrowid
+        conn.execute("INSERT INTO carts (user_id) VALUES (?)", (user_id,))
+    return user_id
 
 
 # ---------------------------------------------------------------- the seven service functions

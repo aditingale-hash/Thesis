@@ -110,3 +110,20 @@ def test_full_flow_in_browser(page):
     page.goto("/checkout")
     page.get_by_role("button", name="Confirm order").click()
     assert notice(page) == "Your cart is empty."
+
+
+def test_registration_in_browser(page):
+    page.goto("/login")
+    page.get_by_role("link", name="Create an account").click()
+    page.get_by_label("Username").fill("maria.k")
+    page.get_by_label("Password", exact=True).fill("short")
+    page.get_by_label("Repeat password").fill("short")
+    page.get_by_role("button", name="Create account").click()
+    assert notice(page) == "Password must be at least 8 characters long."
+    page.get_by_label("Password", exact=True).fill("long-enough-pw")
+    page.get_by_label("Repeat password").fill("long-enough-pw")
+    page.get_by_role("button", name="Create account").click()
+    assert page.title() == "Home - TechDesk Shop"
+    page.goto("/products/502")
+    page.get_by_role("button", name="Add to cart").click()
+    assert "Total: 3.79 EUR" in page.inner_text("main")

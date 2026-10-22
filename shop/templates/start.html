@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Welcome to TechDesk Shop</h1>
-{% include "_search.html" %}
+<section class="hero">
+  <h1>Everything for a better desk</h1>
+  <p>Mice, keyboards, lamps, bags and more for work and study.</p>
+</section>
+<section class="categories">
+  <h2>Shop by category</h2>
+  <ul class="category-grid">
+    {% for name, url, current in category_links %}
+    <li>
+      <a class="category-tile" href="{{ url }}">
+        <img src="/static/icons/{{ name | slug }}.svg" alt="" width="160" height="120">
+        <span>{{ name }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}

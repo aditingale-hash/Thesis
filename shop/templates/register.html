@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-card">
+  <h1>Create account</h1>
+  <form method="post" action="/register" novalidate>
+    <p class="field"><label for="username">Username</label><input type="text" id="username" name="username" value="{{ username or '' }}" autocomplete="username"></p>
+    <p class="hint">3 to 30 characters: letters, digits, dot, dash or underscore.</p>
+    <p class="field"><label for="password">Password</label><input type="password" id="password" name="password" autocomplete="new-password"></p>
+    <p class="hint">At least 8 characters.</p>
+    <p class="field"><label for="password_repeat">Repeat password</label><input type="password" id="password_repeat" name="password_repeat" autocomplete="new-password"></p>
+    <button class="button button-primary button-block" type="submit">Create account</button>
+  </form>
+  <p class="auth-switch">Already have an account? <a href="/login">Log in</a></p>
+</section>
+{% endblock %}

@@ -2,20 +2,26 @@
 {% block content %}
 <h1>Checkout</h1>
 {% if cart is not none %}
-<h2>Order summary</h2>
-{% if cart["items"] %}
-<ul class="summary">
-  {% for item in cart["items"] %}
-  <li>{{ item.name }}: {{ item.quantity }} x {{ item.unit_price | eur }} = {{ item.line_total | eur }}{% if not item.available %} (Not available){% endif %}</li>
-  {% endfor %}
-</ul>
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %}
-<p class="total">Total: {{ cart.total | eur }}</p>
-<p>No payment is required.</p>
-<form method="post" action="/checkout">
-  <button type="submit">Confirm order</button>
-</form>
+<div class="with-summary">
+  <section class="cart-area">
+    <h2>Order summary</h2>
+    {% if cart["items"] %}
+    <ul class="summary">
+      {% for item in cart["items"] %}
+      <li>{{ item.name }}: {{ item.quantity }} x {{ item.unit_price | eur }} = {{ item.line_total | eur }}{% if not item.available %} (Not available){% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">Your cart is empty.</p>
+    {% endif %}
+  </section>
+  <aside class="summary-card">
+    <p class="total">Total: {{ cart.total | eur }}</p>
+    <p>No payment is required.</p>
+    <form method="post" action="/checkout">
+      <button class="button button-primary button-block" type="submit">Confirm order</button>
+    </form>
+  </aside>
+</div>
 {% endif %}
 {% endblock %}

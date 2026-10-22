@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Order confirmed</h1>
-<dl>
-  <dt>Order number</dt><dd>{{ order.order_id }}</dd>
-  <dt>Status</dt><dd>{{ order.status }}</dd>
-  <dt>Date</dt><dd>{{ order.created }}</dd>
-</dl>
-<ul class="summary">
-  {% for line in order.lines %}
-  <li>{{ line.name }}: {{ line.quantity }} x {{ line.unit_price | eur }} = {{ line.line_total | eur }}</li>
-  {% endfor %}
-</ul>
-<p class="total">Total: {{ order.total | eur }}</p>
+<section class="confirmation">
+  <svg class="confirmation-mark" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="22" fill="#16a34a"/><path d="M14 25l7 7 13-15" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <h1>Order confirmed</h1>
+  <dl>
+    <dt>Order number</dt><dd>{{ order.order_id }}</dd>
+    <dt>Status</dt><dd>{{ order.status }}</dd>
+    <dt>Date</dt><dd>{{ order.created }}</dd>
+  </dl>
+  <ul class="summary">
+    {% for line in order.lines %}
+    <li>{{ line.name }}: {{ line.quantity }} x {{ line.unit_price | eur }} = {{ line.line_total | eur }}</li>
+    {% endfor %}
+  </ul>
+  <p class="total">Total: {{ order.total | eur }}</p>
+  <p><a href="/">Continue shopping</a></p>
+</section>
 {% endblock %}

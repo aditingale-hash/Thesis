@@ -21,12 +21,12 @@ def test_search_results_match(client):
         api = client.get("/api/products", params=api_params).json()
         page = client.get("/search", params=params).text
         items = re.findall(r'<li class="product">(.*?)</li>', page, re.S)
-        assert [int(i) for i in re.findall(r'href="/products/(\d+)"', "".join(items))] == [p["id"] for p in api["results"]]
+        assert [int(i) for i in re.findall(r'<h3><a href="/products/(\d+)"', "".join(items))] == [p["id"] for p in api["results"]]
         for p, item in zip(api["results"], items):
             text = _text(item)
             assert set(p) == {"id", "name", "category", "price", "rating", "available", "badge"}
             assert p["name"] in text and p["category"] in text
-            assert f"Price: {_eur(p['price'])}" in text
+            assert _eur(p["price"]) in text
             assert f"Rating: {p['rating']:.1f} / 5" in text
             assert ("Not available" in text) == (not p["available"])
             assert (p["badge"] or "") in text
@@ -39,7 +39,7 @@ def test_product_detail_matches(client):
         assert set(api) == {"id", "name", "category", "price", "rating", "available", "badge", "stock", "description"}
         for expected in (api["name"], api["category"], _eur(api["price"]), f"{api['rating']:.1f} / 5",
                          "Available" if api["available"] else "Not available",
-                         f"In stock {api['stock']}", api["description"], api["badge"] or ""):
+                         f"In stock: {api['stock']}", api["description"], api["badge"] or ""):
             assert expected in text
 
 
@@ -72,11 +72,13 @@ def test_confirmation_matches(client):
 
 
 def test_no_agent_specific_attributes(client):
+    """No test ids, data attributes or scripts; every field labelled; CSS without hover/animation/web fonts."""
     reset.reset({"initial_state": {"cart": [{"product_id": 101, "quantity": 1}]}})
-    for url in ("/login", "/", "/search?q=mouse", "/products/101", "/cart", "/checkout"):
+    for url in ("/login", "/register", "/", "/search?q=mouse", "/products/101", "/cart", "/checkout"):
         html = client.get(url).text
         assert "data-testid" not in html and "data-" not in html
         assert "<script" not in html
-        # every visible form field has a label
         for field_id in re.findall(r'<input type="(?:text|password|search|number)" id="([^"]+)"', html):
-            assert f'<label for="{field_id}">' in html
+            assert f'<label for="{field_id}"' in html
+    css = re.sub(r"/\*.*?\*/", "", client.get("/static/style.css").text, flags=re.S)  # rules only, no comments
+    assert not re.search(r":hover|transition|animation|@font-face|@import|url\(", css)

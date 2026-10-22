@@ -1,31 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Search results</h1>
-{% include "_search.html" %}
-{% if result %}
-<nav class="sort" aria-label="Sort">
-  <h2>Sort by</h2>
-  <ul>
-    {% for label, url, current in sort_links %}
-    <li><a href="{{ url }}"{% if current %} aria-current="true"{% endif %}>{{ label }}</a></li>
-    {% endfor %}
-  </ul>
-</nav>
-<p>{{ result.results | length }} products found{% if result.query %} for "{{ result.query }}"{% endif %}{% if result.category %} in {{ result.category }}{% endif %}.</p>
-<ul class="results">
-  {% for p in result.results %}
-  <li class="product">
-    <img src="/static/icons/{{ p.category | icon }}" alt="" width="48" height="48">
-    <div>
-      <h3><a href="/products/{{ p.id }}">{{ p.name }}</a></h3>
-      <p>{{ p.category }}</p>
-      <p>Price: {{ p.price | eur }}</p>
-      <p>Rating: {{ "%.1f" | format(p.rating) }} / 5</p>
-      <p>{{ "Available" if p.available else "Not available" }}</p>
-      {% if p.badge %}<p class="badge">{{ p.badge }}</p>{% endif %}
-    </div>
-  </li>
-  {% endfor %}
-</ul>
-{% endif %}
+<div class="with-sidebar">
+  <aside class="sidebar">
+    <nav class="filter" aria-label="Category filter">
+      <h2>Categories</h2>
+      <ul>
+        {% for name, url, current in category_links %}
+        <li><a href="{{ url }}"{% if current %} aria-current="true"{% endif %}>{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    {% if result %}
+    <nav class="sort" aria-label="Sort">
+      <h2>Sort by</h2>
+      <ul>
+        {% for label, url, current in sort_links %}
+        <li><a href="{{ url }}"{% if current %} aria-current="true"{% endif %}>{{ label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    {% endif %}
+  </aside>
+  <section class="results-area">
+    <h1>Search results</h1>
+    {% if result %}
+    <p class="result-count">{{ result.results | length }} products found{% if result.query %} for "{{ result.query }}"{% endif %}{% if result.category %} in {{ result.category }}{% endif %}.</p>
+    <ul class="results">
+      {% for p in result.results %}
+      <li class="product">
+        <a class="product-thumb" href="/products/{{ p.id }}" tabindex="-1" aria-hidden="true"><img src="{{ p | image_url }}" alt="" width="200" height="150"></a>
+        <div class="product-body">
+          {% if p.badge %}<p class="badge">{{ p.badge }}</p>{% endif %}
+          <p class="product-category">{{ p.category }}</p>
+          <h3><a href="/products/{{ p.id }}">{{ p.name }}</a></h3>
+          {% with rating = p.rating %}{% include "_stars.html" %}{% endwith %}
+          <p class="price">{{ p.price | eur }}</p>
+          {% with available = p.available %}{% include "_availability.html" %}{% endwith %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+</div>
 {% endblock %}

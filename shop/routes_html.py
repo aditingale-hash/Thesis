@@ -17,7 +17,26 @@ from shop import db, service
 router = APIRouter()
 templates = Jinja2Templates(directory=db.SHOP_DIR / "templates")
 templates.env.filters["eur"] = lambda value: f"{value:.2f} EUR"
-templates.env.filters["icon"] = lambda category: category.lower().replace(" ", "-") + ".svg"
+
+PRODUCT_PHOTOS = db.SHOP_DIR / "static" / "products"
+
+
+def _image_url(product: dict) -> str:
+    """Product photo ``static/products/<id>.jpg`` if present, else the category illustration."""
+    product_id = product.get("id", product.get("product_id"))
+    if (PRODUCT_PHOTOS / f"{product_id}.jpg").exists():
+        return f"/static/products/{product_id}.jpg"
+    if "category" in product:
+        return f"/static/icons/{_slug(product['category'])}.svg"
+    return "/static/icons/product.svg"  # cart items carry no category
+
+
+def _slug(category: str) -> str:
+    return category.lower().replace(" ", "-")
+
+
+templates.env.filters["image_url"] = _image_url
+templates.env.filters["slug"] = _slug
 
 
 def _page(request: Request, template: str, title: str, status_code: int = 200, error: str | None = None, **context):
@@ -55,6 +74,27 @@ async def login(request: Request):
         request.session["user_id"] = service.login(conn, form.get("username"), form.get("password"))
     except service.ShopError as e:
         return _page(request, "login.html", "Log in", e.status_code, e.message)
+    finally:
+        conn.close()
+    return RedirectResponse("/", status_code=303)
+
+
+@router.get("/register")
+def register_form(request: Request):
+    return _page(request, "register.html", "Create account")
+
+
+@router.post("/register")
+async def register(request: Request):
+    form = await request.form()
+    conn = db.connect()
+    try:
+        request.session["user_id"] = service.register(
+            conn, form.get("username"), form.get("password"), form.get("password_repeat")
+        )
+    except service.ShopError as e:
+        return _page(request, "register.html", "Create account", e.status_code, e.message,
+                     username=form.get("username") or "")
     finally:
         conn.close()
     return RedirectResponse("/", status_code=303)
