@@ -1,0 +1,13 @@
+<form class="search" action="/search" method="get" role="search">
+  <label for="q">Search products</label>
+  <input type="search" id="q" name="q" value="{{ query }}">
+  <button type="submit">Search</button>
+</form>
+<nav class="filter" aria-label="Category filter">
+  <h2>Categories</h2>
+  <ul>
+    {% for name, url, current in category_links %}
+    <li><a href="{{ url }}"{% if current %} aria-current="true"{% endif %}>{{ name }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>

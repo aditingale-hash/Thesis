@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Cart</h1>
+{% if cart is none %}
+<p><a href="/login">Log in</a></p>
+{% else %}
+{% if cart["items"] %}
+<ul class="cart">
+  {% for item in cart["items"] %}
+  <li class="cart-item">
+    <h2><a href="/products/{{ item.product_id }}">{{ item.name }}</a></h2>
+    <p>Unit price: {{ item.unit_price | eur }}</p>
+    <p>{{ "Available" if item.available else "Not available" }}</p>
+    <form method="post" action="/cart/update" novalidate>
+      <input type="hidden" name="product_id" value="{{ item.product_id }}">
+      <label for="quantity-{{ item.product_id }}">Quantity</label>
+      <input type="number" id="quantity-{{ item.product_id }}" name="quantity" value="{{ item.quantity }}">
+      <button type="submit">Update</button>
+    </form>
+    <form method="post" action="/cart/remove">
+      <input type="hidden" name="product_id" value="{{ item.product_id }}">
+      <button type="submit">Remove</button>
+    </form>
+    <p>Line total: {{ item.line_total | eur }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+<p class="total">Total: {{ cart.total | eur }}</p>
+<form method="get" action="/checkout">
+  <button type="submit">Checkout</button>
+</form>
+{% endif %}
+{% endblock %}

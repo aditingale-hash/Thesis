@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Search results</h1>
+{% include "_search.html" %}
+{% if result %}
+<nav class="sort" aria-label="Sort">
+  <h2>Sort by</h2>
+  <ul>
+    {% for label, url, current in sort_links %}
+    <li><a href="{{ url }}"{% if current %} aria-current="true"{% endif %}>{{ label }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+<p>{{ result.results | length }} products found{% if result.query %} for "{{ result.query }}"{% endif %}{% if result.category %} in {{ result.category }}{% endif %}.</p>
+<ul class="results">
+  {% for p in result.results %}
+  <li class="product">
+    <img src="/static/icons/{{ p.category | icon }}" alt="" width="48" height="48">
+    <div>
+      <h3><a href="/products/{{ p.id }}">{{ p.name }}</a></h3>
+      <p>{{ p.category }}</p>
+      <p>Price: {{ p.price | eur }}</p>
+      <p>Rating: {{ "%.1f" | format(p.rating) }} / 5</p>
+      <p>{{ "Available" if p.available else "Not available" }}</p>
+      {% if p.badge %}<p class="badge">{{ p.badge }}</p>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+{% if product %}
+<h1>{{ product.name }}</h1>
+<div class="product-detail">
+  <img src="/static/icons/{{ product.category | icon }}" alt="" width="96" height="96">
+  <dl>
+    <dt>Category</dt><dd>{{ product.category }}</dd>
+    <dt>Price</dt><dd>{{ product.price | eur }}</dd>
+    <dt>Rating</dt><dd>{{ "%.1f" | format(product.rating) }} / 5</dd>
+    <dt>Availability</dt><dd>{{ "Available" if product.available else "Not available" }}</dd>
+    <dt>In stock</dt><dd>{{ product.stock }}</dd>
+    {% if product.badge %}<dt>Badge</dt><dd>{{ product.badge }}</dd>{% endif %}
+  </dl>
+</div>
+<h2>Description</h2>
+<p>{{ product.description }}</p>
+<form method="post" action="/cart/add" novalidate>
+  <input type="hidden" name="product_id" value="{{ product.id }}">
+  <label for="quantity">Quantity</label>
+  <input type="number" id="quantity" name="quantity" value="1">
+  <button type="submit">Add to cart</button>
+</form>
+{% else %}
+<h1>Product not found</h1>
+{% endif %}
+{% endblock %}

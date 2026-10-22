@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+shop/shop.db
+shop/shop.tmp
+shop/snapshot.db
+results/*
+!results/**/runs.csv
+!results/**/config_record.json

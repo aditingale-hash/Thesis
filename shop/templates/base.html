@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }} - TechDesk Shop</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <nav aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/cart">Cart</a>
+    </nav>
+    <p class="shop-name">TechDesk Shop</p>
+  </header>
+  {% if error %}
+  <div class="notice" role="alert"><p>{{ error }}</p></div>
+  {% endif %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
