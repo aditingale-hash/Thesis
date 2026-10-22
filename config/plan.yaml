@@ -5,4 +5,7 @@ pipelines: [dom, visual, tool]
 repetitions: 1                 # R; choose after the pilot
 seed: 2026                     # shuffles the run order
 infrastructure_retries: 2      # S5 runs are retried up to this many times
-shop_url: null                 # null = the runner starts the shop itself on a free localhost port
+# The shop runs as its own process (thesis Fig. 4.1). Start it first in a second terminal:
+#   python -m uvicorn shop.app:app --port 8000
+# null = the runner starts the shop inside its own process on a free port (used by the tests).
+shop_url: http://127.0.0.1:8000

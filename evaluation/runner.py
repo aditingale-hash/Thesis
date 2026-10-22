@@ -135,6 +135,16 @@ def config_record(model, model_config: dict, plan_path: Path) -> dict:
 
 # ---------------------------------------------------------------- runs
 
+def check_shop(base_url: str) -> None:
+    """Stop with a clear message if the separately started shop server is not reachable."""
+    import httpx
+    try:
+        httpx.get(f"{base_url}/", timeout=5).raise_for_status()
+    except httpx.HTTPError:
+        raise SystemExit(f"The shop is not reachable at {base_url}. Start it first in a second terminal:\n"
+                         f"    python -m uvicorn shop.app:app --port 8000")
+
+
 def build_runs(plan: dict) -> list[dict]:
     """All (task x pipeline x repetition) runs in the plan's seeded random order."""
     tasks = load_tasks(None if plan["tasks"] == "all" else plan["tasks"])
@@ -218,15 +228,16 @@ def run_experiment(plan_path: Path, stub: bool = False, only=None, experiment: s
     todo = [r for r in runs if r["run_id"] not in done]
     print(f"{len(runs)} runs, {len(runs) - len(todo)} already done, config {record['config_id']}")
 
-    model.chat("Reply with a JSON object.")  # warm-up: loads the model, not recorded
     server = None
     if plan.get("shop_url"):
         base_url = plan["shop_url"]
+        check_shop(base_url)
     else:
         if not db.snapshot_path().exists():
             build_db.build()
         server = ShopServer().start()
         base_url = server.url
+    model.chat("Reply with a JSON object.")  # warm-up: loads the model, not recorded
     browser = Browser(show) if any(r["pipeline"] != "tool" for r in todo) else None
     try:
         for i, run in enumerate(todo, 1):

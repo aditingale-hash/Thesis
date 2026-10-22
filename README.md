@@ -43,7 +43,7 @@ python -m shop.reset                          # snapshot.db -> shop/shop.db
 python -m uvicorn shop.app:app --port 8000    # http://localhost:8000  (login: testuser / testpass)
 ```
 
-You only need to start the shop yourself to look at it. The experiment runner starts its own copy.
+Keep this server running during experiments: the runner uses it (`shop_url` in `config/plan.yaml`).
 
 - Pages: `/login`, `/register`, `/`, `/search`, `/products/{id}`, `/cart`, `/checkout`. You can create your
   own account at `/register`; every reset deletes all accounts except `testuser`.
@@ -71,6 +71,13 @@ python -m evaluation.validate_tasks           # runs all 84 reference solutions 
 ```
 
 ## 4. Run the experiment
+
+First start the shop in a second terminal and leave it running (the plan's `shop_url` points to it,
+so the shop runs as its own process, as in the thesis deployment):
+
+```bash
+python -m uvicorn shop.app:app --port 8000
+```
 
 Configuration: `config/model.yaml` (model, context, seed, coordinate system), `config/limits.yaml`
 (S2-S4), `config/plan.yaml` (tasks, pipelines, repetitions, seed, retries). Ollama must be running.
