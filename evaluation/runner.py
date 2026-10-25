@@ -46,7 +46,7 @@ class StubModel:
 
     config = {"model": "stub"}
 
-    def chat(self, prompt, image_b64=None):
+    def chat(self, prompt, image_b64=None, schema=None):
         return ModelResponse('{"thought": "stub", "action": "finish", "args": {}}', 0, 0, 0.0, 0.0)
 
     def close(self):

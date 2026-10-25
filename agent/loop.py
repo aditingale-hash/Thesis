@@ -62,7 +62,7 @@ def run_agent(pipeline, model, instruction: str, limits: dict, model_config: dic
         prompt, truncated = build_prompt(pipeline, observation, instruction, history.lines, model_config)
         image = observation.content if observation.modality == "image" else None
         try:
-            response = model.chat(prompt, image)
+            response = model.chat(prompt, image, pipeline.response_schema())
         except ModelError as e:
             return result(S5, str(e))
         invocations += 1

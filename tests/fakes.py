@@ -18,10 +18,11 @@ class FakeModel:
         self.prompts, self.images = [], []
         self.fail_at = fail_at
 
-    def chat(self, prompt, image_b64=None):
+    def chat(self, prompt, image_b64=None, schema=None):
         if self.fail_at is not None and len(self.prompts) == self.fail_at:
             raise ModelError("connection refused")
         self.prompts.append(prompt)
+        self.schemas = getattr(self, "schemas", []) + [schema]
         self.images.append(image_b64)
         text = self.responses.pop(0) if self.responses else reply("finish")
         return ModelResponse(text=text, input_tokens=100, output_tokens=10, duration_ms=5.0, wall_ms=6.0)

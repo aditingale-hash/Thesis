@@ -60,6 +60,9 @@ Actions:
                 "scroll": {"direction": ("string", True)},
                 "go_back": {}, **FINISH_SPEC}
 
+    def argument_values(self) -> dict:
+        return {"press": {"key": sorted(KEYS)}, "scroll": {"direction": ["up", "down"]}}
+
     def observe(self) -> Observation:
         png = self.page.screenshot(type="png", full_page=False)
         self.step += 1

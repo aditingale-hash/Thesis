@@ -70,6 +70,12 @@ come from the pilot and main experiment on the experiment host.
    and reached S2. This is a result for Chapter 5, not a defect.
 8. **4.3.2 decision to confirm with the supervisor.** The prototype uses the common JSON action
    format in all pipelines (no native function calling), to keep the agent core identical (DP1).
+   The JSON schema given to the runtime is built from each pipeline's action space (allowed
+   action names, exact arguments and types, fixed value lists). Suggested sentence: *"The
+   structured-output schema is derived from the action space of the active pipeline, so the
+   runtime only produces actions and arguments that exist in that pipeline. Format errors such as
+   a list instead of an element reference are therefore excluded in all conditions alike, and the
+   comparison concerns the choice of actions rather than the output format."*
 
 ## 4. Listings (final code)
 

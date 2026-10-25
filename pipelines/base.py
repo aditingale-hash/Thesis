@@ -86,6 +86,38 @@ class InteractionPipeline(ABC):
     def execute(self, action: Action) -> ActionResult:
         """Perform one (already parsed) action."""
 
+    def argument_values(self) -> dict:
+        """Allowed values of arguments with a fixed list, as {action: {argument: [values]}} (default none)."""
+        return {}
+
+    def response_schema(self) -> dict:
+        """JSON schema of a valid response in this pipeline, given to the model runtime as structured output.
+
+        The format is the common {"thought", "action", "args"}; the schema restricts "action" to this
+        pipeline's action names and "args" to exactly the arguments (types, required, fixed values) of
+        the chosen action. Built only from ``action_specs`` and ``argument_values``.
+        """
+        values = self.argument_values()
+        variants = []
+        for name, spec in self.action_specs().items():
+            properties = {}
+            for arg, (json_type, _) in spec.items():
+                properties[arg] = {"type": json_type}
+                if arg in values.get(name, {}):
+                    properties[arg]["enum"] = list(values[name][arg])
+            variants.append({
+                "type": "object",
+                "properties": {
+                    "thought": {"type": "string"},
+                    "action": {"type": "string", "enum": [name]},
+                    "args": {"type": "object", "properties": properties,
+                             "required": [a for a, (_, required) in spec.items() if required],
+                             "additionalProperties": False},
+                },
+                "required": ["thought", "action", "args"],
+            })
+        return {"anyOf": variants}
+
     def truncate(self, observation: Observation, max_chars: int) -> str:
         """Shorten the text observation to ``max_chars``; pipelines override with their own rule."""
         return observation.prompt_text[:max_chars]

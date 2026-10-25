@@ -114,13 +114,13 @@ class DomScriptModel(FakeModel):
         super().__init__([])
         self.steps = list(steps)
 
-    def chat(self, prompt, image_b64=None):
+    def chat(self, prompt, image_b64=None, schema=None):
         if self.steps:
             kind, role, name, *text = self.steps.pop(0)
             observation = prompt[prompt.index("## 5. Current observation"):]
             ref = int(re.search(rf'\[(\d+)\] {role} "{re.escape(name)}"', observation).group(1))
             self.responses = [reply("click", ref=ref) if kind == "click" else reply("type", ref=ref, text=text[0])]
-        return super().chat(prompt, image_b64)
+        return super().chat(prompt, image_b64, schema)
 
 
 def test_dom_pipeline_solves_task_through_the_loop(run_session):
@@ -166,7 +166,7 @@ def test_execute_run_writes_trace_and_row(shop_db, shop_server, chromium, tmp_pa
 
 def test_s5_is_retried_and_recorded(shop_db, shop_server, tmp_path):
     class Broken:
-        def chat(self, prompt, image_b64=None): raise ModelError("ollama down")
+        def chat(self, prompt, image_b64=None, schema=None): raise ModelError("ollama down")
     run = {"run_id": "C1-01_tool_r1", "task": _task("C1-01"), "pipeline": "tool", "repetition": 1}
     row = runner.execute_run(run, shop_server, None, Broken(), MODEL_CONFIG, LIMITS, tmp_path, "cfg", retries=2)
     assert row["termination_reason"] == S5 and row["attempts"] == 3 and row["success"] == ""

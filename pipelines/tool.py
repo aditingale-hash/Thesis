@@ -72,6 +72,10 @@ class ToolPipeline(InteractionPipeline):
                              for a, s in t["parameters"]["properties"].items()} for t in SCHEMAS}
         return {**specs, **FINISH_SPEC}
 
+    def argument_values(self) -> dict:
+        return {t["name"]: {a: s["enum"] for a, s in t["parameters"]["properties"].items() if "enum" in s}
+                for t in SCHEMAS}
+
     def observe(self) -> Observation:
         return Observation("text", self.last, len(self.last), self.last)
 

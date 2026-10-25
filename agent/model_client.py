@@ -10,7 +10,8 @@ from dataclasses import dataclass
 
 import httpx
 
-# The ONE action format of all pipelines: {"thought": str, "action": str, "args": object}
+# The ONE action format of all pipelines: {"thought": str, "action": str, "args": object}.
+# During runs each pipeline passes a stricter version of it (InteractionPipeline.response_schema).
 ACTION_SCHEMA = {
     "type": "object",
     "properties": {
@@ -43,8 +44,12 @@ class OllamaClient:
         self.http = httpx.Client(base_url=config["ollama_url"], timeout=config.get("request_timeout_s", 300),
                                  transport=transport)
 
-    def chat(self, prompt: str, image_b64: str | None = None) -> ModelResponse:
-        """Send one user message (optionally with one base64 PNG) and return the reply."""
+    def chat(self, prompt: str, image_b64: str | None = None, schema: dict | None = None) -> ModelResponse:
+        """Send one user message (optionally with one base64 PNG) and return the reply.
+
+        ``schema`` is the structured-output JSON schema (the pipeline's response schema);
+        without it the generic ACTION_SCHEMA is used.
+        """
         message = {"role": "user", "content": prompt}
         if image_b64:
             message["images"] = [image_b64]
@@ -52,7 +57,7 @@ class OllamaClient:
             "model": self.config["model"],
             "messages": [message],
             "stream": False,
-            "format": ACTION_SCHEMA,
+            "format": schema or ACTION_SCHEMA,
             "options": {
                 "temperature": self.config["temperature"],
                 "seed": self.config["seed"],

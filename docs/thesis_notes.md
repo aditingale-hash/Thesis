@@ -139,6 +139,7 @@ First decision of the author: real product photos. **Final decision: no photos.*
 ### D21 Agent core
 - Model: `qwen2.5vl:3b` (multimodal, so the visual pipeline uses the same model); configurable. Ollama `/api/chat`, no streaming, `format` = the common action JSON schema, temperature 0, seed 42, `num_ctx` 16384, `num_predict` 512, request timeout 300 s (a timeout is an S5).
 - The prompt is one user message (five sections, `agent/prompt_template.txt`); the screenshot is attached to it for the visual pipeline.
+- DECISION (author, after the first smoke tests): strict response schema per pipeline. The common format `{"thought", "action", "args"}` is kept, but the structured-output schema given to Ollama is built from the pipeline's own action space (`InteractionPipeline.response_schema()`): `action` must be one of the pipeline's action names, and `args` must contain exactly that action's arguments with the right JSON types and, where a fixed list exists, the allowed values (visual keys and scroll directions, tool categories and sort orders). Reason: in a DOM smoke test the model answered `"ref": [5]` and `click` without `ref` and stopped with S3 after a run with the same configuration had succeeded; such format errors would otherwise dominate all three conditions, while the research question concerns the interaction approach. The schema is derived mechanically from each action space, so all pipelines are constrained in the same way. The action parser still checks every response. Value ranges that are business rules (e.g. quantities) are not in the schema (see D19).
 - Context budget: no tokenizer is available for every model, so prompt length is estimated as characters / 3.5 and a screenshot as 1,400 tokens (Qwen2.5-VL 28x28 patches at 1280x800 = ~1,330 tokens). The budget is `num_ctx - num_predict`. Actual token counts are recorded from Ollama.
 - Parser: strict types (an integer must be a JSON integer, `"14"` or `14.0` are invalid; booleans are not numbers); unknown and missing arguments are invalid; `args` may be omitted for `finish`.
 - Invalid = unparseable/ill-typed response or an action that is invalid at interface level; both count towards S3 (consecutive). Rejected actions reset the counter.
@@ -176,6 +177,7 @@ First decision of the author: real product photos. **Final decision: no photos.*
 - D18: perception component (OmniParser) not implemented; visual `type` appends while DOM `type` replaces.
 - D22: DOM and visual reference solutions are compiled from one shared browser script per task instead of two separate action lists.
 - D23: extra column `attempts` in `runs.csv`.
+- D21: the structured-output schema is the pipeline's strict response schema instead of the generic action schema (still the common `{thought, action, args}` format).
 
 ## 4. Problems encountered (problem, cause, solution)
 
@@ -190,6 +192,8 @@ First decision of the author: real product photos. **Final decision: no photos.*
 - **Action-space example matched a real element.** A scripted test model looked for `[n] button "Search"` in the prompt and found the example `[7] button "Search"` from the DOM action-space text instead of the real button. A small model can be misled the same way. Solution: the example now uses a name that never occurs in the shop (`[7] button "OK"`).
 - **Pandas object dtype.** `runs.csv` stores `success` as text; after mapping to booleans the column kept the object dtype and SciPy's Friedman test failed. Solution: cast to bool after removing S5 rows and cast per-task measures to float.
 - **Real-model smoke test and pilot not possible in the development environment.** Ollama cannot be installed there (no network access to ollama.com). The chain was checked with the stub model instead: all 84 runs of the pilot plan (28 tasks x 3 pipelines, 1 repetition) completed without crashes in 35 s, followed by metrics, statistics, plots, auto labels and viewer on that data. The smoke test (C1-01 in all three pipelines with the real model) and the pilot with the real model have to be run on the experiment machine.
+
+- **Format errors of the model and different results with the same configuration.** In a DOM smoke test (C1-01) the model answered `click` with `"ref": [5]` (a list) and later `click` without arguments, so the run stopped with S3. An earlier run with the same task and configuration had succeeded with 7 actions. Cause: the generic schema allowed any `args` object; and Ollama is not guaranteed to be deterministic across runs even with temperature 0 and a fixed seed (e.g. on a GPU). Solution: strict response schema per pipeline (D21). The non-determinism is the reason for repetitions per task (R).
 
 ## 5. Open questions
 - Smoke test with the real model: does `qwen2.5vl:3b` give click coordinates in screenshot pixels? If not, set `coordinate_mode: normalized_1000` (D18).
