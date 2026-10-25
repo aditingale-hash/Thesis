@@ -8,23 +8,38 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="/">
-        <svg class="logo-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect x="2" y="6" width="28" height="18" rx="3" fill="#fca311"/><rect x="11" y="24" width="10" height="3" fill="#fca311"/><rect x="7" y="27" width="18" height="3" rx="1.5" fill="#fca311"/><rect x="6" y="10" width="20" height="10" rx="1.5" fill="#14213d"/></svg>
-        <span>TechDesk Shop</span>
-      </a>
-      <form class="header-search" action="/search" method="get" role="search">
-        <label for="q" class="visually-hidden">Search products</label>
-        <input type="search" id="q" name="q" value="{{ query or '' }}" placeholder="Search products">
-        <button type="submit">Search</button>
-      </form>
-      <nav class="header-nav" aria-label="Main">
-        <a href="/cart">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M3 4h2.2l2.3 11h11l2-8H6.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="9" cy="19.5" r="1.6" fill="currentColor"/><circle cx="17" cy="19.5" r="1.6" fill="currentColor"/></svg>
-          <span>Cart</span>
+    <div class="header-top">
+      <div class="container header-inner">
+        <a class="logo" href="/">
+          <svg class="logo-mark" viewBox="0 0 32 32" width="34" height="34" aria-hidden="true" focusable="false"><rect x="2" y="6" width="28" height="18" rx="3" fill="#fca311"/><rect x="11" y="24" width="10" height="3" fill="#fca311"/><rect x="7" y="27" width="18" height="3" rx="1.5" fill="#fca311"/><rect x="6" y="10" width="20" height="10" rx="1.5" fill="#14213d"/></svg>
+          <span>TechDesk Shop</span>
         </a>
-      </nav>
+        <form class="header-search" action="/search" method="get" role="search">
+          <label for="q" class="visually-hidden">Search products</label>
+          <input type="search" id="q" name="q" value="{{ query or '' }}" placeholder="Search products">
+          <button type="submit">Search</button>
+        </form>
+        <div class="header-account">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>{% if request.session.get("username") %}Signed in as {{ request.session.get("username") }}{% else %}Not signed in{% endif %}</span>
+        </div>
+        <nav class="header-nav" aria-label="Main">
+          <a href="/cart">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M3 4h2.2l2.3 11h11l2-8H6.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="9" cy="19.5" r="1.6" fill="currentColor"/><circle cx="17" cy="19.5" r="1.6" fill="currentColor"/></svg>
+            <span>Cart</span>
+          </a>
+        </nav>
+      </div>
     </div>
+    <nav class="category-bar" aria-label="Categories">
+      <div class="container">
+        <ul>
+          {% for name in nav_categories %}
+          <li><a href="/search?category={{ name | urlencode }}">{{ name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
   </header>
   {% if error %}
   <div class="container"><div class="notice" role="alert"><p>{{ error }}</p></div></div>
@@ -33,7 +48,35 @@
     {% block content %}{% endblock %}
   </main>
   <footer class="site-footer">
-    <div class="container"><p>TechDesk Shop. Research prototype, TU Chemnitz.</p></div>
+    <div class="container footer-columns">
+      <section>
+        <h2>Customer service</h2>
+        <p>Monday to Friday, 9:00 to 18:00</p>
+        <p>Delivery in 2-3 working days</p>
+        <p>30-day returns</p>
+      </section>
+      <section>
+        <h2>About TechDesk Shop</h2>
+        <p>Desk and computer accessories for work and study.</p>
+        <p>Research prototype, TU Chemnitz.</p>
+      </section>
+      <section>
+        <h2>Payment methods</h2>
+        <p class="payment">
+          <svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="24" rx="4" fill="#ffffff" stroke="#9aa3b2"/><rect x="1" y="7" width="38" height="5" fill="#14213d"/><rect x="6" y="16" width="12" height="4" rx="1" fill="#fca311"/></svg>
+          <span>Credit card</span>
+        </p>
+        <p class="payment">
+          <svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="24" rx="4" fill="#ffffff" stroke="#9aa3b2"/><path d="M8 18h24M10 14v4M16 14v4M24 14v4M30 14v4M7 13l13-6 13 6z" fill="none" stroke="#14213d" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span>Bank transfer</span>
+        </p>
+        <p class="payment">
+          <svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true" focusable="false"><rect x="1" y="1" width="38" height="24" rx="4" fill="#ffffff" stroke="#9aa3b2"/><path d="M13 6h12l4 4v11H13z" fill="none" stroke="#14213d" stroke-width="2" stroke-linejoin="round"/><path d="M16 13h9M16 17h9" stroke="#fca311" stroke-width="2"/></svg>
+          <span>Invoice</span>
+        </p>
+      </section>
+    </div>
+    <div class="container footer-bottom"><p>© 2026 TechDesk Shop</p></div>
   </footer>
 </body>
 </html>

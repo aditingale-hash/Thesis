@@ -40,6 +40,7 @@ async def login(request: Request):
     conn = db.connect()
     try:
         request.session["user_id"] = service.login(conn, body.get("username"), body.get("password"))
+        request.session["username"] = body.get("username")
     except service.ShopError as e:
         return JSONResponse({"error": {"rule": e.rule, "message": e.message}}, status_code=e.status_code)
     finally:

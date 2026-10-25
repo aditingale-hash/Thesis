@@ -22,9 +22,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest==9.1.1"]
+photos = ["pillow==12.3.0"]   # only for shop/tools/fetch_photos.py
 
 [tool.setuptools]
-packages = ["shop", "agent", "pipelines", "evaluation", "evaluation.analysis", "evaluation.labelling"]
+packages = ["shop", "shop.tools", "agent", "pipelines", "evaluation", "evaluation.analysis", "evaluation.labelling"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

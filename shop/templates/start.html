@@ -7,10 +7,10 @@
 <section class="categories">
   <h2>Shop by category</h2>
   <ul class="category-grid">
-    {% for name, url, current in category_links %}
+    {% for name, url, image in category_tiles %}
     <li>
       <a class="category-tile" href="{{ url }}">
-        <img src="/static/icons/{{ name | slug }}.svg" alt="" width="160" height="120">
+        <img src="{{ image }}" alt="" width="160" height="120">
         <span>{{ name }}</span>
       </a>
     </li>

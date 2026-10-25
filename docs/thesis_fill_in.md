@@ -53,8 +53,17 @@ come from the pilot and main experiment on the experiment host.
    click(ref), type(ref, text), go_back() and finish()."*
 2. **3.4.4 Observation.** "a search result lists the identifier, name, **category**, price, rating,
    availability, and badge of each product".
-3. **4.2.2.** Keep "Product images show only a neutral category symbol". Add: *"Cart lines show one
-   generic product symbol, because cart items carry no category."*
+3. **4.2.2 (product images, new decision: real photos).** Replace the sentence about neutral category
+   symbols with: *"Each product is shown with a photo from Wikimedia Commons under a free licence
+   (CC0, public domain, CC BY or CC BY-SA), scaled to 500 x 375 pixels on a white background. The
+   photos were chosen automatically by a search phrase per product and checked by hand; photos
+   showing brand logos, readable text or prices were replaced, so that a photo shows only the
+   product type and does not give the visual pipeline task-relevant information that the other
+   pipelines lack. Images have an empty alternative text, so they do not appear in the
+   accessibility tree. Authors and licences are listed in Appendix X."* Use
+   `shop/static/products/CREDITS.md` for the appendix.
+   Also 4.2.3: the pages have a header with search, the signed-in user name (not a link) and the
+   cart link, a category menu bar on every page, and a footer without links.
 4. **4.2.3 page types.** Add: *"A login page and a registration page also exist. The agent never
    sees them, because the runner establishes the session before a run."*
 5. **Listing 4.5.** The real schema has **no** `"minimum": 1`. Suggested sentence: *"The schema

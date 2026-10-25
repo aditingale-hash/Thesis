@@ -6,6 +6,7 @@ returns the cart for the same operations). On error, the page the user acted on
 is shown again with the core's message in the notice area at the top.
 """
 
+from functools import cache
 from urllib.parse import urlencode
 
 from fastapi import APIRouter, Request
@@ -40,9 +41,20 @@ templates.env.filters["image_url"] = _image_url
 templates.env.filters["slug"] = _slug
 
 
+@cache
+def _nav_categories() -> tuple[str, ...]:
+    """Category names for the menu bar (fixed catalogue, read once)."""
+    conn = db.connect()
+    try:
+        return tuple(service.categories(conn))
+    finally:
+        conn.close()
+
+
 def _page(request: Request, template: str, title: str, status_code: int = 200, error: str | None = None, **context):
+    context = {"title": title, "error": error, "nav_categories": _nav_categories(), **context}
     return templates.TemplateResponse(
-        request, template, {"title": title, "error": error, **context}, status_code=status_code
+        request, template, context, status_code=status_code
     )
 
 
@@ -73,6 +85,7 @@ async def login(request: Request):
     conn = db.connect()
     try:
         request.session["user_id"] = service.login(conn, form.get("username"), form.get("password"))
+        request.session["username"] = form.get("username")
     except service.ShopError as e:
         return _page(request, "login.html", "Log in", e.status_code, e.message)
     finally:
@@ -93,6 +106,7 @@ async def register(request: Request):
         request.session["user_id"] = service.register(
             conn, form.get("username"), form.get("password"), form.get("password_repeat")
         )
+        request.session["username"] = form.get("username")
     except service.ShopError as e:
         return _page(request, "register.html", "Create account", e.status_code, e.message,
                      username=form.get("username") or "")
@@ -105,11 +119,12 @@ async def register(request: Request):
 def start(request: Request):
     conn = db.connect()
     try:
-        cats = service.categories(conn)
+        # tile image: the first product of the category (its photo, or the category illustration)
+        tiles = [(c, _search_url(None, c, None), _image_url(service.search_products(conn, category=c)["results"][0]))
+                 for c in service.categories(conn)]
     finally:
         conn.close()
-    links = [(c, _search_url(None, c, None), False) for c in cats]
-    return _page(request, "start.html", "Home", query="", category_links=links)
+    return _page(request, "start.html", "Home", query="", category_tiles=tiles)
 
 
 @router.get("/search")

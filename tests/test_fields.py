@@ -82,3 +82,18 @@ def test_no_agent_specific_attributes(client):
             assert f'<label for="{field_id}"' in html
     css = re.sub(r"/\*.*?\*/", "", client.get("/static/style.css").text, flags=re.S)  # rules only, no comments
     assert not re.search(r":hover|transition|animation|@font-face|@import|url\(", css)
+
+
+def test_header_and_footer_keep_agents_in_the_shopping_flow(client):
+    """Category bar on every page; the header has no login/account link and the footer has no links,
+    so a browser agent cannot leave the shopping flow through them (the tool agent has no such pages)."""
+    reset.reset({"initial_state": {"cart": [{"product_id": 101, "quantity": 1}]}})
+    for url in ("/", "/search?q=mouse", "/products/101", "/cart", "/checkout"):
+        page = client.get(url).text
+        header = page[page.index("<header"):page.index("</header>")]
+        footer = page[page.index("<footer"):page.index("</footer>")]
+        assert header.count('href="/search?category=') == 8
+        assert 'href="/login"' not in header and 'href="/register"' not in header
+        assert "Signed in as testuser" in header
+        assert "<a " not in footer
+    assert "Delivery in 2-3 working days" in client.get("/products/101").text  # same static line for all products

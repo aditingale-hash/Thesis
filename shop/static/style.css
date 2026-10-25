@@ -44,21 +44,30 @@ p { margin: 4px 0; }
 }
 
 /* ---------- header and footer */
-.site-header { background: var(--navy); color: #fff; }
-.header-inner { display: flex; align-items: center; gap: 28px; height: 72px; }
-.logo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-size: 21px; font-weight: 700; white-space: nowrap; }
-.header-search { flex: 1; display: flex; max-width: 620px; }
+.site-header { color: #fff; }
+.header-top { background: var(--navy); }
+.header-inner { display: flex; align-items: center; gap: 24px; height: 74px; }
+.logo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-size: 22px; font-weight: 700; white-space: nowrap; }
+.header-search { flex: 1; display: flex; max-width: 640px; }
 .header-search input {
-  flex: 1; height: 42px; padding: 0 14px; font-size: 16px; border: 2px solid var(--accent);
+  flex: 1; height: 44px; padding: 0 14px; font-size: 16px; border: 2px solid var(--accent);
   border-right: 0; border-radius: 8px 0 0 8px; background: #fff; color: var(--text);
 }
 .header-search button {
-  height: 42px; padding: 0 20px; font-size: 16px; font-weight: 600; color: var(--navy);
+  height: 44px; padding: 0 22px; font-size: 16px; font-weight: 600; color: var(--navy);
   background: var(--accent); border: 2px solid var(--accent); border-radius: 0 8px 8px 0; cursor: pointer;
 }
-.header-nav { margin-left: auto; }
-.header-nav a { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 600; text-decoration: none; padding: 8px 12px; border: 1px solid #3a4a74; border-radius: 8px; }
-.site-footer { margin-top: 48px; padding: 20px 0; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); }
+.header-account { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 14px; color: #d7def0; white-space: nowrap; }
+.header-nav a { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; text-decoration: none; padding: 9px 14px; border: 1px solid #3a4a74; border-radius: 8px; }
+.category-bar { background: var(--navy-2); border-bottom: 3px solid var(--accent); }
+.category-bar ul { list-style: none; margin: 0 auto; padding: 0; display: flex; gap: 4px; }
+.category-bar a { display: block; padding: 10px 14px; color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; }
+.site-footer { margin-top: 56px; background: var(--navy); color: #c9d2e6; font-size: 14px; }
+.footer-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; padding-top: 28px; padding-bottom: 20px; }
+.site-footer h2 { color: #fff; font-size: 15px; margin: 0 0 10px; }
+.site-footer p { margin: 0 0 6px; }
+.payment { display: flex; align-items: center; gap: 10px; }
+.footer-bottom { border-top: 1px solid #2c3d66; padding-top: 12px; padding-bottom: 14px; color: #93a0bd; }
 main.container { padding-top: 28px; min-height: 60vh; }
 
 /* ---------- focus (visible to the visual agent) */
@@ -121,7 +130,7 @@ input[type=search]::-webkit-search-cancel-button { -webkit-appearance: none; }
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
   color: var(--text); font-weight: 700; font-size: 17px; text-decoration: none;
 }
-.category-tile img { width: 160px; height: 120px; }
+.category-tile img { width: 160px; height: 120px; object-fit: contain; }
 
 /* ---------- results page */
 .with-sidebar { display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: start; }
@@ -151,6 +160,7 @@ input[type=search]::-webkit-search-cancel-button { -webkit-appearance: none; }
 .stock { color: var(--muted); margin: 8px 0 18px; }
 .add-form { display: flex; align-items: center; gap: 16px; padding-top: 18px; border-top: 1px solid var(--border); }
 .add-form .button { padding: 11px 28px; font-size: 16px; }
+.delivery { display: flex; align-items: center; gap: 8px; margin-top: 16px; color: var(--ok); font-size: 14px; font-weight: 600; }
 .description { margin-top: 24px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 28px; }
 
 /* ---------- cart and checkout */

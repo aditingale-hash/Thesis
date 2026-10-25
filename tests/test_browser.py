@@ -35,7 +35,7 @@ def test_full_flow_in_browser(page):
     # search + category filter + sort
     page.get_by_label("Search products").fill("mouse")
     page.get_by_role("button", name="Search").click()
-    page.get_by_role("link", name="Mice", exact=True).click()
+    page.get_by_role("navigation", name="Category filter").get_by_role("link", name="Mice", exact=True).click()
     page.get_by_role("link", name="Price: low to high").click()
     names = page.locator(".results h3").all_inner_texts()
     assert names[0] == "Compact Travel Mouse" and "Gaming Mouse G5" == names[-1]

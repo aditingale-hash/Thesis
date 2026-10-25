@@ -60,6 +60,26 @@ Keep this server running during experiments: the runner uses it (`shop_url` in `
 | `remove_from_cart` | `DELETE /api/cart/items/{product_id}` |
 | `checkout` | `POST /api/checkout` |
 
+### Product photos (once, on your own computer)
+
+The shop shows `shop/static/products/<id>.jpg` when it exists, otherwise a category illustration.
+To download freely licensed photos from Wikimedia Commons (about 10-15 minutes):
+
+```bash
+python -m pip install -e ".[photos]"
+python -m shop.tools.fetch_photos
+```
+
+Open `shop/static/products/review.html` and check every photo: no brand logos, no readable text,
+no prices, right product type. Replace bad ones (repeat until all are fine):
+
+```bash
+python -m shop.tools.fetch_photos --next 101 205
+```
+
+Then commit the photos (`git add shop/static/products`), so every experiment uses the same images.
+Authors and licences are listed in `shop/static/products/CREDITS.md`.
+
 ## 3. Tasks
 
 28 tasks in `evaluation/tasks/` (7 categories x 4). Goal states of the constraint tasks are computed from

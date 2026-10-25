@@ -1,0 +1,258 @@
+{
+ "categories": {
+  "Mice": "computer mouse",
+  "Keyboards": "computer keyboard",
+  "USB Hubs": "USB hub",
+  "Laptop Bags": "laptop bag",
+  "Notebooks": "notebook paper",
+  "Desk Lamps": "desk lamp",
+  "Headsets": "headphones",
+  "Webcams": "webcam"
+ },
+ "products": {
+  "101": [
+   "wireless computer mouse"
+  ],
+  "102": [
+   "wireless computer mouse"
+  ],
+  "103": [
+   "computer mouse"
+  ],
+  "104": [
+   "wired computer mouse"
+  ],
+  "105": [
+   "vertical ergonomic mouse"
+  ],
+  "106": [
+   "optical computer mouse"
+  ],
+  "107": [
+   "gaming mouse"
+  ],
+  "108": [
+   "bluetooth mouse"
+  ],
+  "109": [
+   "trackball"
+  ],
+  "110": [
+   "small computer mouse"
+  ],
+  "201": [
+   "computer keyboard"
+  ],
+  "202": [
+   "wireless keyboard"
+  ],
+  "203": [
+   "mechanical keyboard"
+  ],
+  "204": [
+   "mechanical keyboard"
+  ],
+  "205": [
+   "computer keyboard"
+  ],
+  "206": [
+   "ergonomic split keyboard"
+  ],
+  "207": [
+   "bluetooth keyboard"
+  ],
+  "208": [
+   "keyboard and mouse"
+  ],
+  "209": [
+   "numeric keypad"
+  ],
+  "210": [
+   "backlit keyboard"
+  ],
+  "301": [
+   "USB hub"
+  ],
+  "302": [
+   "USB hub"
+  ],
+  "303": [
+   "USB-C hub"
+  ],
+  "304": [
+   "USB-C adapter"
+  ],
+  "305": [
+   "powered USB hub"
+  ],
+  "306": [
+   "USB-C hub ethernet"
+  ],
+  "307": [
+   "USB hub"
+  ],
+  "308": [
+   "USB-C adapter"
+  ],
+  "309": [
+   "laptop docking station"
+  ],
+  "310": [
+   "USB hub"
+  ],
+  "401": [
+   "laptop sleeve"
+  ],
+  "402": [
+   "laptop sleeve"
+  ],
+  "403": [
+   "backpack"
+  ],
+  "404": [
+   "backpack"
+  ],
+  "405": [
+   "messenger bag"
+  ],
+  "406": [
+   "rolling suitcase"
+  ],
+  "407": [
+   "waterproof backpack"
+  ],
+  "408": [
+   "laptop bag"
+  ],
+  "409": [
+   "briefcase"
+  ],
+  "410": [
+   "laptop sleeve"
+  ],
+  "501": [
+   "notebook stationery"
+  ],
+  "502": [
+   "dotted notebook"
+  ],
+  "503": [
+   "notebook"
+  ],
+  "504": [
+   "grid notebook"
+  ],
+  "505": [
+   "hardcover notebook"
+  ],
+  "506": [
+   "spiral notebook"
+  ],
+  "507": [
+   "recycled paper notebook"
+  ],
+  "508": [
+   "pocket notebook"
+  ],
+  "509": [
+   "notebooks stationery"
+  ],
+  "510": [
+   "leather notebook"
+  ],
+  "601": [
+   "desk lamp"
+  ],
+  "602": [
+   "LED desk lamp"
+  ],
+  "603": [
+   "clamp lamp"
+  ],
+  "604": [
+   "architect lamp"
+  ],
+  "605": [
+   "desk lamp"
+  ],
+  "606": [
+   "book light"
+  ],
+  "607": [
+   "LED desk lamp"
+  ],
+  "608": [
+   "banker's lamp"
+  ],
+  "609": [
+   "monitor light bar",
+   "LED lamp"
+  ],
+  "610": [
+   "clip-on reading light"
+  ],
+  "701": [
+   "headset"
+  ],
+  "702": [
+   "headset microphone"
+  ],
+  "703": [
+   "wireless headset"
+  ],
+  "704": [
+   "noise cancelling headphones"
+  ],
+  "705": [
+   "bluetooth headset"
+  ],
+  "706": [
+   "headphones"
+  ],
+  "707": [
+   "call center headset"
+  ],
+  "708": [
+   "gaming headset"
+  ],
+  "709": [
+   "earphones"
+  ],
+  "710": [
+   "wireless headphones"
+  ],
+  "801": [
+   "webcam"
+  ],
+  "802": [
+   "webcam"
+  ],
+  "803": [
+   "4K webcam",
+   "webcam"
+  ],
+  "804": [
+   "webcam"
+  ],
+  "805": [
+   "ring light"
+  ],
+  "806": [
+   "webcam"
+  ],
+  "807": [
+   "webcam"
+  ],
+  "808": [
+   "conference camera",
+   "webcam"
+  ],
+  "809": [
+   "webcam cover",
+   "webcam"
+  ],
+  "810": [
+   "webcam"
+  ]
+ }
+}
