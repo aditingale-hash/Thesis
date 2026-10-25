@@ -129,7 +129,8 @@ def config_record(model, model_config: dict, plan_path: Path) -> dict:
         "sha256": hashes,
     }
     record["config_id"] = hashlib.sha256(json.dumps(
-        {"sha256": hashes, "model": model_info, "model_config": model_config}, sort_keys=True).encode()).hexdigest()[:12]
+        {"sha256": hashes, "model": model_info, "model_config": model_config,
+         "git_commit": record["git_commit"], "git_dirty": record["git_dirty"]}, sort_keys=True).encode()).hexdigest()[:12]
     return record
 
 

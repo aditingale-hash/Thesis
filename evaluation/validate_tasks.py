@@ -63,8 +63,7 @@ def compile_browser_step(pipeline, step: dict) -> list[Action]:
     x, y = round(box["x"] + box["width"] / 2), round(box["y"] + box["height"] / 2)
     if kind == "click":
         return scrolls + [Action("click", {"x": x, "y": y})]
-    return scrolls + [Action("click", {"x": x, "y": y}), Action("press", {"key": "Control+A"}),
-                      Action("type", {"text": target["text"]})]
+    return scrolls + [Action("type", {"x": x, "y": y, "text": target["text"]})]
 
 
 def run_reference(task: dict, pipeline_name: str, base_url: str, browser, model_config: dict) -> dict:

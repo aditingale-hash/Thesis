@@ -3,7 +3,7 @@
 Observation: screenshot of the 1280x800 viewport only (PNG). No DOM or accessibility
 information of any kind reaches the agent: the history shows only the action and its
 status, never page titles or notice texts.
-Actions: click(x, y), type(text), press(key), scroll(direction), go_back(), finish(),
+Actions: click(x, y), type(x, y, text), press(key), scroll(direction), go_back(), finish(),
 executed with page.mouse / page.keyboard only (never element handles).
 """
 
@@ -47,7 +47,7 @@ class VisualPipeline(InteractionPipeline):
         return f"""You see a screenshot of the browser window. {COORDINATES[self.coordinate_mode]}
 Actions:
 - click(x: number, y: number): mouse click at this position.
-- type(text: string): type the text at the current keyboard focus (click into a field first). Typing adds to the existing content; to replace it, first press("Control+A").
+- type(x: number, y: number, text: string): click the input field at this position and replace its content with the text. Typing does not submit; press("Enter") or click the button afterwards.
 - press(key: string): press a key: {", ".join(sorted(KEYS))}.
 - scroll(direction: string): scroll the page "up" or "down" by {SCROLL_PX} pixels.
 - go_back(): go back to the previous page.
@@ -55,7 +55,7 @@ Actions:
 
     def action_specs(self) -> dict:
         return {"click": {"x": ("number", True), "y": ("number", True)},
-                "type": {"text": ("string", True)},
+                "type": {"x": ("number", True), "y": ("number", True), "text": ("string", True)},
                 "press": {"key": ("string", True)},
                 "scroll": {"direction": ("string", True)},
                 "go_back": {}, **FINISH_SPEC}
@@ -81,13 +81,20 @@ Actions:
     def execute(self, action: Action) -> ActionResult:
         args = action.args
         try:
-            if action.name == "click":
+            if action.name in ("click", "type"):
                 x, y = self.to_pixels(args["x"], args["y"])
                 if not (0 <= x < WIDTH and 0 <= y < HEIGHT):
                     return ActionResult(INVALID, f"The position ({args['x']}, {args['y']}) is outside the screenshot.")
+            if action.name == "click":
                 navigated = browser.run_and_settle(self.page, lambda: self.page.mouse.click(x, y))
             elif action.name == "type":
-                browser.run_and_settle(self.page, lambda: self.page.keyboard.type(args["text"]), wait_for_navigation=False)
+                # one action like the DOM pipeline's type(ref, text): focus the field at the position,
+                # select its content and replace it, all with input events (no element access)
+                def type_at():
+                    self.page.mouse.click(x, y)
+                    self.page.keyboard.press("Control+A")
+                    self.page.keyboard.type(args["text"])
+                browser.run_and_settle(self.page, type_at, wait_for_navigation=False)
                 navigated = False
             elif action.name == "press":
                 if args["key"] not in KEYS:

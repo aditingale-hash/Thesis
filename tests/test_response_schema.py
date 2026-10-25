@@ -55,6 +55,8 @@ def test_visual_schema_fixed_values():
     assert valid(schema, r("scroll", direction="down"))
     assert not valid(schema, r("scroll", direction="left")) and not valid(schema, r("press", key="F13"))
     assert not valid(schema, r("click", x=640))
+    assert valid(schema, r("type", x=555, y=35, text="Wireless Mouse M2"))
+    assert not valid(schema, r("type", text="Wireless Mouse M2"))       # the target position is required
 
 
 def test_tool_schema_accepts_all_reference_calls_and_enforces_enums():

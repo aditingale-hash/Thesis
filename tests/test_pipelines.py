@@ -133,10 +133,12 @@ def test_visual_off_screen_and_bad_args_are_invalid(visual):
 
 def test_visual_type_and_enter_and_rejection_without_dom_text(visual):
     x, y = center(visual.page, "#q")
-    visual.execute(Action("click", {"x": x, "y": y}))
-    visual.execute(Action("type", {"text": "notebook a5"}))
+    assert visual.execute(Action("type", {"x": x, "y": y, "text": "mouse"})).status == EXECUTED
+    assert visual.execute(Action("type", {"x": x, "y": y, "text": "notebook a5"})).status == EXECUTED  # replaces
+    assert visual.page.input_value("#q") == "notebook a5" and "/search" not in visual.page.url  # no submit
     assert visual.execute(Action("press", {"key": "Enter"})).status == EXECUTED
     assert "q=notebook+a5" in visual.page.url
+    assert visual.execute(Action("type", {"x": 2000, "y": y, "text": "x"})).status == INVALID
     visual.page.goto("/products/106")
     x, y = center(visual.page, ".add-form button")
     r = visual.execute(Action("click", {"x": x, "y": y}))

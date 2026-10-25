@@ -65,9 +65,14 @@ come from the pilot and main experiment on the experiment host.
 6. **Listing 4.3 / Fig. 3.5.** The interface has two more methods: `action_specs()` (action names
    and argument types for the action parser) and `truncate(observation, max_chars)` (the pipeline's
    truncation rule).
-7. **3.4.3 type(text).** As written ("the agent must first click an input field") is exactly what
-   the prototype does. In the first smoke test the model typed 25 times without clicking a field
-   and reached S2. This is a result for Chapter 5, not a defect.
+7. **3.4.3 Actions and Table 3.6 (visual typing).** The visual action is now `type(target, text)`.
+   Suggested text: *"type(target, text) clicks the target position, selects the content of the field
+   and enters the text, using input events only. Like type(ref, text) in the DOM/accessibility
+   pipeline, it names its target and replaces the content in one action; it does not submit the
+   form."* Reason, for 4.8: in the first smoke tests the model typed 25 times without first
+   clicking a field, because the separate focusing step did not exist in the other pipelines.
+   Table 3.6, column Visual: Search = "type at search field, press Enter"; Change quantity =
+   "type at quantity field, click 'Update'".
 8. **4.3.2 decision to confirm with the supervisor.** The prototype uses the common JSON action
    format in all pipelines (no native function calling), to keep the agent core identical (DP1).
    The JSON schema given to the runtime is built from each pipeline's action space (allowed
