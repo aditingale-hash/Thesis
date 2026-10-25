@@ -95,6 +95,10 @@ python -m evaluation.runner run --plan config/plan.yaml
 python -m evaluation.runner run-one --task C1-01 --pipeline visual --stub
 ```
 
+Every step is printed while a run is going. One model call can take 5-30 s (the first one
+longer, while Ollama loads the model); only press Ctrl+C if nothing has been printed for several
+minutes, and then check that Ollama is running. After Ctrl+C, the same command continues.
+
 Output per experiment in `results/<experiment>/`:
 - `config_record.json`: versions, model digest, hardware, git commit, SHA-256 of all inputs
 - `runs.csv`: one summary row per run

@@ -135,6 +135,18 @@ def config_record(model, model_config: dict, plan_path: Path) -> dict:
 
 # ---------------------------------------------------------------- runs
 
+def check_ollama(model: OllamaClient) -> None:
+    """Stop with a clear message if Ollama is not running or the model is not downloaded."""
+    import httpx
+    url, name = model.config["ollama_url"], model.config["model"]
+    try:
+        tags = model.http.get("/api/tags", timeout=10).json().get("models", [])
+    except httpx.HTTPError:
+        raise SystemExit(f"Ollama is not reachable at {url}. Start Ollama (or run: ollama serve) and try again.")
+    if not any(name in (m.get("name"), m.get("model")) for m in tags):
+        raise SystemExit(f"The model {name} is not downloaded. Run: ollama pull {name}")
+
+
 def check_shop(base_url: str) -> None:
     """Stop with a clear message if the separately started shop server is not reachable."""
     import httpx
@@ -183,7 +195,8 @@ def execute_run(run: dict, base_url: str, browser: Browser | None, model, model_
     for attempt in range(1, retries + 2):
         for old in run_dir.glob("step_*.png"):
             old.unlink()
-        recorder = TraceRecorder(run_dir / "trace.jsonl")
+        recorder = TraceRecorder(run_dir / "trace.jsonl", echo=True)
+        print(f"run {run['run_id']} (attempt {attempt}) ...", flush=True)
         recorder.run_start(run["run_id"], run["task"]["id"], run["pipeline"], run["repetition"], config_id, attempt)
         pipeline = make_pipeline(run["pipeline"], model_config)
         execution_ms, verification, detail = 0.0, None, ""
@@ -221,6 +234,8 @@ def run_experiment(plan_path: Path, stub: bool = False, only=None, experiment: s
     exp_dir.mkdir(parents=True, exist_ok=True)
     model = StubModel() if stub else OllamaClient(model_config)
 
+    if isinstance(model, OllamaClient):
+        check_ollama(model)
     record = config_record(model, model_config, Path(plan_path))
     (exp_dir / "config_record.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
     runs = only or build_runs(plan)
@@ -268,6 +283,14 @@ def main(argv=None) -> int:
     one.add_argument("--show", action="store_true",
                      help="show the browser window, slowed down (debugging only; timings are not comparable)")
     args = parser.parse_args(argv)
+    try:
+        return _run_command(args, parser)
+    except KeyboardInterrupt:
+        print("\nStopped by you (Ctrl+C). Finished runs are saved; run the same command again to continue.")
+        return 130
+
+
+def _run_command(args, parser) -> int:
 
     if args.command == "run":
         exp_dir = run_experiment(Path(args.plan), args.stub)

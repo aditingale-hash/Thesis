@@ -18,9 +18,10 @@ CSV_FIELDS = ["run_id", "task_id", "category", "level", "pipeline", "repetition"
 class TraceRecorder:
     """Writes the events of one run and counts what the summary row needs."""
 
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, echo: bool = False):
         path.parent.mkdir(parents=True, exist_ok=True)
         self.path = path
+        self.echo = echo          # print one line per step while the run is going
         self.file = open(path, "w", encoding="utf-8")
         self.n_invocations = self.n_actions = self.n_invalid = self.n_rejected = 0
         self.input_tokens = self.output_tokens = 0
@@ -50,6 +51,9 @@ class TraceRecorder:
             self.n_actions += 1
         self.n_invalid += status == INVALID
         self.n_rejected += status == REJECTED
+        if self.echo:
+            what = f"{name} {json.dumps(args, ensure_ascii=False) if args else ''}".strip() if name else "(invalid response)"
+            print(f"  step {step}: {what} -> {status}{': ' + message if message else ''}", flush=True)
         self._write("action", step=step, name=name, args=args, status=status, message=message,
                     duration_ms=round(duration_ms, 1), parse_error=parse_error)
 
